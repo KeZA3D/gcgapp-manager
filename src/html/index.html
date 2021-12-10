@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <link rel="stylesheet" href="../public/styles/bootstrap.css" />
+    <link rel="stylesheet" href="../public/styles/style.css" />
+    <link href="../public/fonts/google.roboto.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../public/fonts/fontawesome/css/all.min.css">
+    <!-- <script type="text/javascript" src="../public/scripts/render.js"></script> -->
+    <title>GGBook</title>
+</head>
+
+<body class="theme-dark" data-highlight="highlight-default" data-gradient="body-default">
+
+    <div id="preloader" class="preloader-hide">
+        <div class="spinner-border color-highlight" role="status"></div>
+    </div>
+
+    <div id="page" style="background-image: url(&quot;../images/G_pic.png&quot;);">
+        <div class="page-content header-clear-small pb-0" style="transform: translateX(0px);">
+            <div class="card card-style">
+                <div data-card-height="100" class="card mb-0">
+                    <div class="card-center text-center">
+                        <h1 class="color-white mb-0 font-40" data-title="ggbook">GGBook</h1>
+                    </div>
+                    <div class="card-overlay bg-black opacity-80"></div>
+                    <div class="card-overlay-infinite bg-black opacity-80"
+                        style="height: 150px; background-image: url(&quot;../images/G_pic.png&quot;);"></div>
+                </div>
+            </div>
+            <!-- <div class="card card-style">
+                <div class="content mb-2">
+                    <div class="row mb-0 text-center">
+                        <a href="#" class="col" data-spec-name="cpu">
+                            <h4 class="font-11 font-700 text-uppercase">CPU</h4>
+                            <i class="fal fa-microchip font-30 color-green-dark"></i>
+                            <p class="font-11 font-700 text-uppercase"></p>
+                        </a>
+                        <a href="#" class="col" data-spec-name="ram">
+                            <h4 class="font-11 font-700 text-uppercase">RAM</h4>
+                            <i class="fal fa-memory font-30 color-green-dark"></i>
+                            <p class="font-11 font-700 text-uppercase"></p>
+                        </a>
+                    </div>
+                </div>
+            </div> -->
+            <div class="card card-style disabled" data-mode="setup" data-setup-name="operator">
+                <div class="content mb-2">
+                    <div class="row mb-0 text-center">
+                        <div class="col">
+                            <h4 class="font-11 font-700 text-uppercase">OPERATOR</h4>
+                            <i class="fal fa-user font-30 color-green-dark"></i>
+                            <p class="font-11 font-700"></p>
+                        </div>
+                        <div class="col">
+                            <h4 class="font-11 font-700 text-uppercase">PASSWORD</h4>
+                            <i class="fal fa-key font-30 color-green-dark"></i>
+                            <p class="font-11 font-700"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-style disabled" data-mode="worker" data-worker-name="connection">
+                <div class="content mb-2">
+                    <h2>Connection</h2>
+                    <div class="list-group list-custom-small list-icon-0">
+                        <a href="#">
+                            <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
+                            <span>Gizmo API</span>
+                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                        </a>
+                        <a href="#">
+                            <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
+                            <span>Gizmo Database</span>
+                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                        </a>
+                        <a href="#">
+                            <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
+                            <span>Gizmo SignalR</span>
+                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                        </a>
+                        <a class="border-0" href="#">
+                            <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
+                            <span>GGBook Server</span>
+                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-style" data-mode="setup" data-setup-name="connection">
+                <div class="content mb-2">
+                    <h2>Connection</h2>
+                    <div class="list-group list-custom-small list-icon-0">
+                        <a href="#">
+                            <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
+                            <span>Gizmo Software</span>
+                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                        </a>
+                        <a href="#">
+                            <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
+                            <span>Config</span>
+                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                        </a>
+                        <a href="#">
+                            <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
+                            <span>Database</span>
+                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                        </a>
+                        <a href="#">
+                            <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
+                            <span>Hosts</span>
+                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                        </a>
+                        <a href="#">
+                            <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
+                            <span>Operator</span>
+                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                        </a>
+                        <a href="#">
+                            <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
+                            <span>API</span>
+                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                        </a>
+                        <a class="border-0" href="#">
+                            <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
+                            <span>Version</span>
+                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- 
+            <div class="card card-style">
+                <div class="content mt-0 mb-0">
+                    <div class="list-group list-custom-large list-icon-0">
+                        <a data-menu="settings-modal" href="#">
+                            <i class="fa font-19 fa-cog rounded-s color-blue-dark"></i>
+                            <span>Settings</span>
+                            <strong>Details about service config</strong>
+                            <i class="fa fa-chevron-right opacity-30 mt-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <!-- 
+    <div id="settings-modal" class="menu menu-box-modal menu-box-detached rounded-m">
+        <div class="menu-title mt-n1">
+            <h1>Settings</h1>
+            <a href="#" class="close-menu"><i class="fa fa-times"></i></a>
+        </div>
+
+        <form method="post" id="promocode-form" class="content">
+            <div class="input-style input-style-always-active no-borders no-icon mt-2">
+                <input type="text" class="form-control" id="username-modal-input-form" name="web-username"
+                    placeholder="Enter operator username">
+                <em></em>
+            </div>
+            <div class="input-style input-style-always-active no-borders no-icon mt-2">
+                <input type="text" class="form-control" id="password-modal-input-form" name="web-password"
+                    placeholder="Enter operator password">
+                <em></em>
+            </div>
+            <div class="input-style input-style-always-active no-borders no-icon mt-2">
+                <input type="text" class="form-control" id="port-modal-input-form" name="port"
+                    placeholder="Enter web port">
+                <em></em>
+            </div>
+            <div class="divider mt-4 mb-4"></div>
+            <div class="input-style input-style-always-active no-borders no-icon mt-2">
+                <input type="text" class="form-control" id="redis-username-modal-input-form" name="redis-username"
+                    placeholder="Enter redis username">
+                <em></em>
+            </div>
+            <div class="input-style input-style-always-active no-borders no-icon mt-2">
+                <input type="text" class="form-control" id="redis-password-modal-input-form" name="redis-password"
+                    placeholder="Enter redis password">
+                <em></em>
+            </div>
+            <div class="align-items-center mb-5">
+                <a href="#" class='btn btn-full btn-m shadow-large rounded-s text-uppercase font-900 bg-highlight'
+                    type="submit">Активировать</a>
+            </div>
+        </form>
+    </div> -->
+    <script type="text/javascript" src="../public/scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../public/scripts/custom.js"></script>
+    <div class="menu-hider"></div>
+    <p class="offline-message bg-red-dark color-white">No internet connection detected</p>
+    <p class="online-message bg-green-dark color-white">You are back online</p>
+    </script>
+</body>
+
+</html>
