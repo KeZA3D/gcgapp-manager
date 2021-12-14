@@ -13,123 +13,164 @@
     <title>GGBook</title>
 </head>
 
-<body class="theme-dark" data-highlight="highlight-default" data-gradient="body-default">
+<body class="theme-dark" data-highlight="highlight-blue" data-gradient="body-default">
 
-    <div id="preloader" class="preloader-hide">
+    <div id="preloader" class="preloader">
         <div class="spinner-border color-highlight" role="status"></div>
     </div>
 
     <div id="page" style="background-image: url(&quot;../images/G_pic.png&quot;);">
         <div class="page-content header-clear-small pb-0" style="transform: translateX(0px);">
-            <div class="card card-style">
-                <div data-card-height="100" class="card mb-0">
-                    <div class="card-center text-center">
-                        <h1 class="color-white mb-0 font-40" data-title="ggbook">GGBook</h1>
-                    </div>
-                    <div class="card-overlay bg-black opacity-80"></div>
-                    <div class="card-overlay-infinite bg-black opacity-80"
-                        style="height: 150px; background-image: url(&quot;../images/G_pic.png&quot;);"></div>
+            <div data-card-height="90" class="preload-img card card-style rounded-s"
+                style="height: 90px;background-image: url(&quot;../images/G_pic.png&quot;);">
+                <div class="card-center ms-3">
+                    <h1 class="color-white mb-0">GCGApp</h1>
+                    <p class="color-white mt-n1 mb-0">Make your life easier</p>
                 </div>
+                <div class="card-overlay rounded-s bg-black opacity-70"></div>
+                <div class="card-overlay card-overlay-infinite rounded-s bg-black opacity-70"
+                    data-src="url(&quot;../images/G_pic.png&quot;);"
+                    style="height: 90px;background-image: url(&quot;../images/G_pic.png&quot;);"></div>
             </div>
-            <!-- <div class="card card-style">
-                <div class="content mb-2">
-                    <div class="row mb-0 text-center">
-                        <a href="#" class="col" data-spec-name="cpu">
-                            <h4 class="font-11 font-700 text-uppercase">CPU</h4>
-                            <i class="fal fa-microchip font-30 color-green-dark"></i>
-                            <p class="font-11 font-700 text-uppercase"></p>
-                        </a>
-                        <a href="#" class="col" data-spec-name="ram">
-                            <h4 class="font-11 font-700 text-uppercase">RAM</h4>
-                            <i class="fal fa-memory font-30 color-green-dark"></i>
-                            <p class="font-11 font-700 text-uppercase"></p>
-                        </a>
-                    </div>
-                </div>
-            </div> -->
-            <div class="card card-style disabled" data-mode="setup" data-setup-name="operator">
-                <div class="content mb-2">
-                    <div class="row mb-0 text-center">
-                        <div class="col">
-                            <h4 class="font-11 font-700 text-uppercase">OPERATOR</h4>
-                            <i class="fal fa-user font-30 color-green-dark"></i>
-                            <p class="font-11 font-700"></p>
+            <div class="card card-style" data-name="softwares">
+                <div class="card card-style">
+                    <div class="content mb-0">
+                        <div class="row mb-2 mt-n2">
+                            <div class="col-6 text-start">
+                                <h4 class="font-700 text-uppercase font-12 opacity-50">projects</h4>
+                            </div>
                         </div>
-                        <div class="col">
-                            <h4 class="font-11 font-700 text-uppercase">PASSWORD</h4>
-                            <i class="fal fa-key font-30 color-green-dark"></i>
-                            <p class="font-11 font-700"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card card-style disabled" data-mode="worker" data-worker-name="connection">
-                <div class="content mb-2">
-                    <h2>Connection</h2>
-                    <div class="list-group list-custom-small list-icon-0">
-                        <a href="#">
-                            <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
-                            <span>Gizmo API</span>
-                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                        </a>
-                        <a href="#">
-                            <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
-                            <span>Gizmo Database</span>
-                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                        </a>
-                        <a href="#">
-                            <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
-                            <span>Gizmo SignalR</span>
-                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                        </a>
-                        <a class="border-0" href="#">
-                            <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
-                            <span>GGBook Server</span>
-                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+                        <div class="divider mb-3"></div>
 
-            <div class="card card-style" data-mode="setup" data-setup-name="connection">
-                <div class="content mb-2">
-                    <h2>Connection</h2>
-                    <div class="list-group list-custom-small list-icon-0">
-                        <a href="#">
-                            <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
-                            <span>Gizmo Software</span>
-                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                        <a href="#collapse-ggbook" class="d-flex mb-4" data-bs-toggle="collapse">
+                            <div class="align-self-center">
+                                <span
+                                    class="icon icon-l gradient-blue shadow-bg shadow-bg-s rounded-m color-white me-3"><i
+                                        class="fa fa-cog"></i></span>
+                            </div>
+                            <div class="align-self-center w-100">
+                                <h5>GGBook</h5>
+                                <div class="disabled" data-project-type="app-download">
+                                    <div class="progress mt-2 mb-1" style="height:3px;">
+                                        <div class="progress-bar progress-bar-animated progress-bar-striped border-0 bg-blue-dark text-start ps-2"
+                                            role="progressbar" style="width: 2%" aria-valuemin="0" aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-0">
+                                        <div class="col-6 text-start">
+                                            <p class="mb-n1 font-12 opacity-60 disabled" data-title="d">Downloading</p>
+                                            <p class="mb-n1 font-12 opacity-60 disabled" data-title="du">Downloading
+                                                update
+                                            </p>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <p class="mb-n1 font-12 opacity-60" data-title="p">0%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="disabled" data-project-type="app-status">
+                                    <div class="row mb-0">
+                                        <div class="col-6 text-start">
+                                            <span class="badge font-12 opacity-70"></span>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <span class="badge bg-red-dark font-12">Stopped</span>
+                                            <span class="badge bg-green-dark font-12 disabled">Active</span>
+                                            <span class="badge bg-yellow-dark font-12 disabled">Starting</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </a>
-                        <a href="#">
-                            <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
-                            <span>Config</span>
-                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                        </a>
-                        <a href="#">
-                            <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
-                            <span>Database</span>
-                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                        </a>
-                        <a href="#">
-                            <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
-                            <span>Hosts</span>
-                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                        </a>
-                        <a href="#">
-                            <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
-                            <span>Operator</span>
-                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                        </a>
-                        <a href="#">
-                            <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
-                            <span>API</span>
-                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                        </a>
-                        <a class="border-0" href="#">
-                            <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
-                            <span>Version</span>
-                            <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                        </a>
+                    </div>
+                    </a>
+                </div>
+            </div>
+            <div class="collapse show" id="collapse-ggbook">
+                <div class="card card-style disabled" data-mode="setup" data-setup-name="operator">
+                    <div class="content mb-2">
+                        <div class="row mb-0 text-center">
+                            <div class="col">
+                                <h4 class="font-11 font-700 text-uppercase">OPERATOR</h4>
+                                <i class="fal fa-user font-30 color-green-dark"></i>
+                                <p class="font-11 font-700"></p>
+                            </div>
+                            <div class="col">
+                                <h4 class="font-11 font-700 text-uppercase">PASSWORD</h4>
+                                <i class="fal fa-key font-30 color-green-dark"></i>
+                                <p class="font-11 font-700"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-style disabled" data-mode="worker" data-worker-name="connection">
+                    <div class="content mb-2">
+                        <h2>Connection</h2>
+                        <div class="list-group list-custom-small list-icon-0">
+                            <a href="#">
+                                <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
+                                <span>Gizmo API</span>
+                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                            </a>
+                            <a href="#">
+                                <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
+                                <span>Gizmo Database</span>
+                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                            </a>
+                            <a href="#">
+                                <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
+                                <span>Gizmo SignalR</span>
+                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                            </a>
+                            <a class="border-0" href="#">
+                                <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
+                                <span>GGBook Server</span>
+                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-style disabled" data-mode="setup" data-setup-name="connection">
+                    <div class="content mb-2">
+                        <h2>Connection</h2>
+                        <div class="list-group list-custom-small list-icon-0">
+                            <a href="#">
+                                <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
+                                <span>Gizmo Software</span>
+                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                            </a>
+                            <a href="#">
+                                <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
+                                <span>Config</span>
+                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                            </a>
+                            <a href="#">
+                                <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
+                                <span>Database</span>
+                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                            </a>
+                            <a href="#">
+                                <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
+                                <span>Hosts</span>
+                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                            </a>
+                            <a href="#">
+                                <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
+                                <span>Operator</span>
+                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                            </a>
+                            <a href="#">
+                                <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
+                                <span>API</span>
+                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                            </a>
+                            <a class="border-0" href="#">
+                                <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
+                                <span>Version</span>
+                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

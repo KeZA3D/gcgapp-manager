@@ -56,7 +56,7 @@ function createTray() {
 
     tray.setContextMenu(contextMenu)
     tray.on("double-click", () => {
-        win.show()
+        windows.main.show()
     })
     // Show the tray context menu, and keep the available commands up to date
     // updateTrayMenu()

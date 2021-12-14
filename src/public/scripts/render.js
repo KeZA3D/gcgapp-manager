@@ -1,7 +1,10 @@
 const electron = require("electron")
 const fs = require("fs")
 const ipcRenderer = electron.ipcRenderer;
+const config = require('../../config')
+
 document.addEventListener('DOMContentLoaded', () => {
+
     const oldHTML = document.querySelector(".page-content").innerHTML
     const oldSetupConnectionHTML = document.querySelector('[data-setup-name="connection"]').innerHTML
 
@@ -47,11 +50,12 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(data);
     })
 
+
+
     ipcRenderer.on('process:mode', (event, data) => {
         data = JSON.parse(data)
         console.log(data)
         if (data == "setup") {
-            document.querySelector("[data-title='ggbook']").innerHTML = "GGBook: Setup Mode"
             document.querySelectorAll("[data-mode='setup']").forEach(element => {
                 element.classList.remove("disabled")
             });
@@ -59,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 element.classList.add("disabled")
             });
         } else {
-            document.querySelector("[data-title='ggbook']").innerHTML = "GGBook"
             document.querySelectorAll("[data-mode='setup']").forEach(element => {
                 element.classList.add("disabled")
             });
@@ -101,7 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const SUCCESS = "Success"
 
         if (data.mode == "setup") {
-            document.querySelector("[data-title='ggbook']").innerHTML = "GGBook: Setup Mode"
             document.querySelectorAll("[data-mode='setup']").forEach(element => {
                 element.classList.remove("disabled")
             });
@@ -120,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 steps[parseInt(i) - 1].querySelectorAll("span")[1].classList.add(data.steps[i] == true ? "bg-green-dark" : "bg-red-dark")
             }
         } else {
-            document.querySelector("[data-title='ggbook']").innerHTML = "GGBook"
             document.querySelectorAll("[data-mode='setup']").forEach(element => {
                 element.classList.add("disabled")
             });
@@ -167,6 +168,32 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector(".page-content").innerHTML = oldHTML
     });
 
+    ipcRenderer.on('download', (event, data) => {
+        data = JSON.parse(data)
+        const projectHTML = document.querySelector("a[href='#collapse-" + data.moduleName + "']")
+        projectHTML.querySelector("div[data-project-type='app-status']").classList.add("disabled")
+        const downloadHTML = projectHTML.querySelector("div[data-project-type='app-download']")
+        downloadHTML.classList.remove("disabled")
+
+        projectHTML.querySelector("[data-title='du']").classList.add("disabled")
+        projectHTML.querySelector("[data-title='d']").classList.remove("disabled")
+
+        downloadHTML.querySelector("div.progress-bar").style.width = "0%"
+        projectHTML.querySelector("[data-title='p']").innerHTML = "0%"
+    })
+
+
+    ipcRenderer.on('download-progress', (event, data) => {
+        data = JSON.parse(data)
+        const projectHTML = document.querySelector("a[href='#collapse-" + data.moduleName + "']")
+        const downloadHTML = projectHTML.querySelector("div[data-project-type='app-download']")
+
+        console.log(data)
+        const value = Math.floor(data.status.percent * 100).toString() + "%"
+        downloadHTML.querySelector("div.progress-bar").style.width = value
+        projectHTML.querySelector("[data-title='p']").innerHTML = value
+    })
+
     window.onbeforeunload = (e) => {
         ipcRenderer.send("dom:reloading")
         console.log("Hi")
@@ -175,12 +202,14 @@ document.addEventListener('DOMContentLoaded', () => {
         //     // It is recommended to use the dialog API to let the user confirm closing the
         //     // application.
         // e.returnValue = true // equivalent to `return false` but not recommended
+        // e.returnValue = true
     }
 
-    window.addEventListener('beforeunload', () => {
-        // globalShortcut.unregister('F5', reload);
-        // globalShortcut.unregister('CommandOrControl+R', reload);
-        console.log("Bye")
-    })
+    // window.addEventListener('beforeunload', (e) => {
+    //     // globalShortcut.unregister('F5', reload);
+    //     // globalShortcut.unregister('CommandOrControl+R', reload);
+    //     console.log("Bye")
+    //     e.returnValue = true
+    // })
 
 });

@@ -11,14 +11,19 @@ const main = module.exports = {
     toggleAlwaysOnTop,
     toggleDevTools,
     toggleFullScreen,
+    loadSettings,
+    downloadModule,
     win: null
 }
 
 const { app, BrowserWindow, screen } = require('electron')
 const debounce = require('debounce')
+const { download } = require("electron-dl");
 
 const config = require('../../config')
 const log = require('../log')
+const fs = require('fs')
+const path = require('path')
 // const menu = require('../menu')
 
 function init(state, options) {
@@ -49,7 +54,7 @@ function init(state, options) {
     })
     win.setMenu(null)
     require('@electron/remote/main').enable(win.webContents)
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
     win.loadURL(config.WINDOW_MAIN)
 
     win.once('ready-to-show', () => {
@@ -175,6 +180,33 @@ function setBounds(bounds, maximize) {
     } else {
         log('setBounds: not setting bounds because of window maximization')
     }
+}
+
+function downloadModule(moduleName, properties, url, cb = function (dl) { }) {
+    main.send('download', JSON.stringify({ moduleName }))
+    properties.onProgress = status => main.send('download-progress', JSON.stringify({ status, moduleName }));
+    download(BrowserWindow.getAllWindows()[0], url, properties)
+        .then(dl => {
+            if (typeof cb == "function") {
+                cb(dl)
+            }
+        });
+}
+
+/**
+ * Loading APPDATA window settings
+ */
+function loadSettings() {
+    const file = path.join(config.APPDATA, "settings.json");
+    if (!fs.existsSync(file)) {
+        fs.writeFileSync(file, JSON.stringify({
+            projectAutoStart: {
+                ggbook: true
+            },
+            enableHardwareAcceleration: false
+        }))
+    }
+    return fs.readFileSync(file, 'utf8')
 }
 
 /**
