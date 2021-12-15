@@ -60,7 +60,7 @@ module.exports = {
 
     WINDOW_MAIN: 'file://' + path.join(__dirname, 'html', 'index.html'),
     RENDER_JS: __dirname + "/public/scripts/render.js",
-    DELAYED_INIT: 1000,
+    DELAYED_INIT: 3000,
 
     WINDOW_INITIAL_BOUNDS: {
         width: 500,

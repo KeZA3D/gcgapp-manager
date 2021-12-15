@@ -13,6 +13,7 @@ const main = module.exports = {
     toggleFullScreen,
     loadSettings,
     downloadModule,
+    updateModule,
     win: null
 }
 
@@ -182,15 +183,18 @@ function setBounds(bounds, maximize) {
     }
 }
 
-function downloadModule(moduleName, properties, url, cb = function (dl) { }) {
+async function downloadModule(moduleName, properties, url, cb = function (dl) { }) {
     main.send('download', JSON.stringify({ moduleName }))
     properties.onProgress = status => main.send('download-progress', JSON.stringify({ status, moduleName }));
-    download(BrowserWindow.getAllWindows()[0], url, properties)
-        .then(dl => {
-            if (typeof cb == "function") {
-                cb(dl)
-            }
-        });
+    const dl = await download(BrowserWindow.getAllWindows()[0], url, properties)
+    return cb(dl)
+}
+
+async function updateModule(moduleName, properties, url, cb = function (dl) { }) {
+    main.send('process', JSON.stringify({ moduleName, event: "update" }))
+    properties.onProgress = status => main.send('process', JSON.stringify({ status, moduleName, event: "update-progress" }));
+    const dl = await download(BrowserWindow.getAllWindows()[0], url, properties)
+    return cb(dl)
 }
 
 /**

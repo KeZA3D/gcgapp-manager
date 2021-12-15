@@ -1,16 +1,17 @@
 console.time("init")
 
 require('@electron/remote/main').initialize()
-const { app } = require('electron');
+const { app, Notification } = require('electron');
 const ipc = require('./main/ipc')
 const ggbook = require('./main/ggbook')
 const windows = require('./main/windows')
 const startup = require('./main/startup')
+const wincmd = require('node-windows');
 
 const config = require('./config')
 const settings = JSON.parse(windows.main.loadSettings())
-const fs = require('fs')
-const path = require('path')
+// const fs = require('fs')
+// const path = require('path')
 let shouldQuit = false
 
 if (!settings.enableHardwareAcceleration) app.disableHardwareAcceleration()
@@ -19,6 +20,14 @@ if (!settings.enableHardwareAcceleration) app.disableHardwareAcceleration()
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
   app.quit();
 }
+
+wincmd.isAdminUser((isAdmin) => {
+  console.log("Running app as", isAdmin == true ? "Administrator" : "DefaultUser (Should Quit)")
+  if (!isAdmin) {
+    showNotification("Ошибка запуска", "Запустите приложение от имени Администратора!!!")
+    app.quit()
+  }
+})
 
 if (!shouldQuit && !app.requestSingleInstanceLock()) {
   shouldQuit = true
@@ -30,8 +39,9 @@ if (shouldQuit) {
   init()
 }
 
-function init() {
+async function init() {
   makeSingleInstance()
+
 
   let isReady = false // app ready, windows can be created
   app.ipcReady = false // main window has finished loading and IPC is ready
@@ -78,15 +88,28 @@ function delayedInit() {
   if (app.isQuitting) return
 
   const updater = require('./main/updater')
-
+  const ggbookUpdates = () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        console.log("Checking updates")
+        await ggbook.checkUpdates(true)
+        console.log("Repeat")
+        ggbookUpdates()
+        resolve();
+      }, 10000)
+    });
+  }
   updater.init()
 
   const tray = require('./main/tray')
   tray.init()
 
   if (settings.projectAutoStart.ggbook) {
-    ggbook.checkUpdates(false).then(() => ggbook.init())
-    setInterval(() => ggbook.checkUpdates(true), 86400)
+    ggbook.checkUpdates(false).then(() => {
+      ggbook.init()
+      ggbookUpdates()
+    })
+
   }
 }
 
@@ -108,4 +131,8 @@ function makeSingleInstance() {
       mainWindow.focus()
     }
   })
+}
+
+function showNotification(title, body) {
+  new Notification({ title, body }).show()
 }

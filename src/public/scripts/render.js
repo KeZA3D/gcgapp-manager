@@ -164,8 +164,56 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('[data-setup-name="connection"]').innerHTML = oldSetupConnectionHTML
     });
 
-    ipcRenderer.on('process:restart', (event, data) => {
-        document.querySelector(".page-content").innerHTML = oldHTML
+    ipcRenderer.on('process', (event, data) => {
+        data = JSON.parse(data)
+        const projectHTML = document.querySelector("a[href='#collapse-" + data.moduleName + "']")
+        // projectHTML.querySelector("div[data-project-type='app-status']").classList.add("disabled")
+        const downloadHTML = projectHTML.querySelector("div[data-project-type='app-download']")
+        const appStatusHTML = projectHTML.querySelector("div[data-project-type='app-status']")
+        console.log(data);
+        switch (data.event) {
+            case "spawned":
+                downloadHTML.classList.add("disabled")
+                appStatusHTML.classList.remove("disabled")
+                appStatusHTML.querySelector("span[data-title='stop']").classList.add("disabled")
+                appStatusHTML.querySelector("span[data-title='restart']").classList.add("disabled")
+                appStatusHTML.querySelector("span[data-title='active']").classList.remove("disabled")
+                appStatusHTML.querySelector("span[data-title='v']").innerHTML = data.version
+                break;
+            // case "error":
+            //     break;
+            case "restart":
+                downloadHTML.classList.add("disabled")
+                appStatusHTML.classList.remove("disabled")
+                appStatusHTML.querySelector("span[data-title='stop']").classList.add("disabled")
+                appStatusHTML.querySelector("span[data-title='restart']").classList.remove("disabled")
+                appStatusHTML.querySelector("span[data-title='active']").classList.add("disabled")
+                break;
+            case "update":
+                downloadHTML.classList.remove("disabled")
+                appStatusHTML.classList.add("disabled")
+                appStatusHTML.querySelector("span[data-title='stop']").classList.add("disabled")
+                appStatusHTML.querySelector("span[data-title='restart']").classList.add("disabled")
+                appStatusHTML.querySelector("span[data-title='active']").classList.add("disabled")
+
+                projectHTML.querySelector("[data-title='du']").classList.remove("disabled")
+                projectHTML.querySelector("[data-title='d']").classList.add("disabled")
+
+                downloadHTML.querySelector("div.progress-bar").style.width = "0%"
+                projectHTML.querySelector("[data-title='p']").innerHTML = "0%"
+                console.log(1)
+                break;
+            case "update-progress":
+                const value = Math.floor(data.status.percent * 100).toString() + "%"
+                downloadHTML.querySelector("div.progress-bar").style.width = value
+                projectHTML.querySelector("[data-title='p']").innerHTML = value
+                break;
+            // case "update-complete":
+            //     projectHTML.querySelector("[data-title='p']").innerHTML = "Starting process"
+            //     break;
+            // case "update-error":
+            //     break;
+        }
     });
 
     ipcRenderer.on('download', (event, data) => {

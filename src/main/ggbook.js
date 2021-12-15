@@ -27,15 +27,29 @@ function isAuthorized() {
 }
 
 function init() {
+    ggbook.updating = false
     if (fs.existsSync(GGBOOK_SETUP_PATH) == false) {
         fs.writeFileSync(GGBOOK_SETUP_PATH, JSON.stringify(DEFAULT_SETUP_DATA))
     }
     if (!isDownloaded()) {
+        ggbook.updating = true
         return windows.main.downloadModule(moduleName, {
             directory: APPDATA,
             filename: "ggbook.exe"
-        }, GGBOOK_DOWNLOAD_URL)
+        },
+            GGBOOK_DOWNLOAD_URL,
+            async () => {
+                var setup = JSON.parse(fs.readFileSync(GGBOOK_SETUP_PATH, 'utf8'))
+                var getVersionInfo = await fetch(GGBOOK_UPDATE_URL)
+                if (getVersionInfo.ok === false) throw new Error("Failed to check software version: site is not available!")
+                getVersionInfo = await getVersionInfo.json()
+                setup.version = getVersionInfo.version
+                fs.writeFileSync(GGBOOK_SETUP_PATH, JSON.stringify(setup, null, 4))
+                ggbook.init()
+            })
     }
+
+    const setupConfig = JSON.parse(fs.readFileSync(GGBOOK_SETUP_PATH, "utf8"))
 
     const child = ggbook.process = cp.spawn(GGBOOK_PATH, ["--colors"], {
         windowsHide: true,
@@ -76,14 +90,18 @@ function init() {
     child.on("close", (e) => {
         console.log("Closed ggbook application with code:", e)
         processCache = { mode: null, steps: {}, connection: { api: null, database: null, signalr: null, server: null }, operator: { username: null, password: null } }
-        windows.main.send(`process:restart`, JSON.stringify({ moduleName: moduleName }))
-        setTimeout(() => ggbook.init(), 2000)
+        if (e !== null) {
+            windows.main.send(`process`, JSON.stringify({ event: "restart", data: e, moduleName: moduleName }))
+            setTimeout(() => ggbook.init(), 2000)
+        }
     })
+
     child.on("error", (err) => {
-        windows.main.send('process', JSON.stringify(err))
+        windows.main.send('process', JSON.stringify({ event: "error", data: err, moduleName: moduleName }))
     })
+
     child.on("spawn", () => {
-        windows.main.send('process', JSON.stringify({ event: "spawned", data: true, moduleName: moduleName }))
+        windows.main.send('process', JSON.stringify({ event: "spawned", moduleName: moduleName, version: setupConfig.version }))
         log("GGBook process has been spawned!")
     })
 
@@ -91,15 +109,11 @@ function init() {
 }
 
 async function checkUpdates(forceInit = false) {
-    if (!fs.existsSync(GGBOOK_SETUP_PATH) || !fs.existsSync(GGBOOK_PATH)) return false;
+    if (!fs.existsSync(GGBOOK_SETUP_PATH) || !fs.existsSync(GGBOOK_PATH)) {
+        ggbook.updating = false;
+        return false;
+    }
     var setup = JSON.parse(fs.readFileSync(GGBOOK_SETUP_PATH, 'utf8'))
-    const downloader = new Downloader({
-        url: GGBOOK_DOWNLOAD_URL, //If the file name already exists, a new file with the name 200MB1.zip is created.
-        directory: APPDATA, //This folder will be created, if it doesn't exist.
-        filename: "ggbook.exe",
-        maxAttempts: 3,
-        cloneFiles: false
-    });
     try {
         var getVersionInfo = await fetch(GGBOOK_UPDATE_URL)
         if (getVersionInfo.ok === false) throw new Error("Failed to check software version: site is not available!")
@@ -107,14 +121,21 @@ async function checkUpdates(forceInit = false) {
         if (setup == false) throw new Error("Failed to check software version: unable to read the file!")
         if (typeof setup.version == "undefined" || getVersionInfo.version > setup.version) {
             if (ggbook.process !== null) {
-                ggbook.process.kill('SIGINT')
+                console.log("Closing application GGBook.exe")
+                await ggbook.process.kill('SIGINT')
                 ggbook.process = null
             }
-            fs.unlinkSync(GGBOOK_PATH)
-            await downloader.download()
+            // fs.unlinkSync(GGBOOK_PATH)
+            await windows.main.updateModule(moduleName, {
+                directory: APPDATA,
+                filename: "ggbook.exe",
+                overwrite: true
+            },
+                GGBOOK_DOWNLOAD_URL)
             setup.version = getVersionInfo.version
             fs.writeFileSync(GGBOOK_SETUP_PATH, JSON.stringify(setup, null, 4))
             if (forceInit == true) ggbook.init()
+            return true
         } else {
             return false
         }
