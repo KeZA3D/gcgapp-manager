@@ -1,7 +1,8 @@
 console.time("init")
 
 require('@electron/remote/main').initialize()
-const { app, Notification } = require('electron');
+const electron = require('electron');
+const { app, Notification, mainWindow } = electron;
 const ipc = require('./main/ipc')
 const ggbook = require('./main/ggbook')
 const windows = require('./main/windows')
@@ -14,7 +15,8 @@ const settings = JSON.parse(windows.main.loadSettings())
 // const path = require('path')
 let shouldQuit = false
 
-if (!settings.enableHardwareAcceleration) app.disableHardwareAcceleration()
+if (!settings || !settings.enableHardwareAcceleration) app.disableHardwareAcceleration()
+
 
 // // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -87,29 +89,30 @@ async function init() {
 function delayedInit() {
   if (app.isQuitting) return
 
-  const updater = require('./main/updater')
+  require('./main/updater')({
+    repo: 'KeZA3D/gcgapp-manager',
+    updateInterval: '5 hours',
+    notifyUser: false
+  })
+
   const ggbookUpdates = () => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
-        console.log("Checking updates")
         await ggbook.checkUpdates(true)
-        console.log("Repeat")
         ggbookUpdates()
         resolve();
-      }, 10000)
+      }, (86400 * 1000))
     });
   }
-  updater.init()
 
   const tray = require('./main/tray')
   tray.init()
 
-  if (settings.projectAutoStart.ggbook) {
+  if (!settings || settings.projectAutoStart.ggbook) {
     ggbook.checkUpdates(false).then(() => {
       ggbook.init()
       ggbookUpdates()
     })
-
   }
 }
 
@@ -125,10 +128,10 @@ function makeSingleInstance() {
 
   app.requestSingleInstanceLock()
 
-  app.on('second-instance', () => {
-    if (mainWindow) {
-      if (mainWindow.isMinimized()) mainWindow.restore()
-      mainWindow.focus()
+  app.on('second-instance', (argv) => {
+    if (app.ipcReady) {
+      log('Second app instance opened, but was prevented:', argv)
+      windows.main.show()
     }
   })
 }

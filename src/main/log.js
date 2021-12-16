@@ -15,6 +15,7 @@ function log (...args) {
   if (app.ipcReady) {
     windows.main.send('log', ...args)
   } else {
+    console.log("not ready")
     app.once('ipcReady', () => windows.main.send('log', ...args))
   }
 }

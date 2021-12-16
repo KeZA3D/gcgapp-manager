@@ -43,7 +43,7 @@ function init(state, options) {
         title: config.APP_WINDOW_TITLE,
         titleBarStyle: 'hiddenInset', // Hide title bar (Mac)
         useContentSize: true, // Specify web page size without OS chrome
-        width: 600,
+        width: 1200,
         autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: true,
@@ -55,7 +55,7 @@ function init(state, options) {
     })
     win.setMenu(null)
     require('@electron/remote/main').enable(win.webContents)
-    // win.webContents.openDevTools()
+    win.webContents.openDevTools()
     win.loadURL(config.WINDOW_MAIN)
 
     win.once('ready-to-show', () => {
@@ -203,12 +203,8 @@ async function updateModule(moduleName, properties, url, cb = function (dl) { })
 function loadSettings() {
     const file = path.join(config.APPDATA, "settings.json");
     if (!fs.existsSync(file)) {
-        fs.writeFileSync(file, JSON.stringify({
-            projectAutoStart: {
-                ggbook: true
-            },
-            enableHardwareAcceleration: false
-        }))
+        fs.mkdirSync(config.APPDATA)
+        fs.writeFileSync(file, JSON.stringify(config.DEFAULT_SETTINGS_DATA))
     }
     return fs.readFileSync(file, 'utf8')
 }

@@ -75,8 +75,10 @@
                                         </div>
                                         <div class="col-6 text-end">
                                             <span class="badge bg-red-dark font-12" data-title="stop">Stopped</span>
-                                            <span class="badge bg-green-dark font-12 disabled" data-title="active">Active</span>
-                                            <span class="badge bg-yellow-dark font-12 disabled" data-title="restart">Restarting</span>
+                                            <span class="badge bg-green-dark font-12 disabled"
+                                                data-title="active">Active</span>
+                                            <span class="badge bg-yellow-dark font-12 disabled"
+                                                data-title="restart">Restarting</span>
                                         </div>
                                     </div>
                                 </div>
@@ -85,91 +87,89 @@
                     </div>
                     </a>
                 </div>
-            </div>
-            <div class="collapse show" id="collapse-ggbook">
-                <div class="card card-style disabled" data-mode="setup" data-setup-name="operator">
-                    <div class="content mb-2">
-                        <div class="row mb-0 text-center">
-                            <div class="col">
-                                <h4 class="font-11 font-700 text-uppercase">OPERATOR</h4>
-                                <i class="fal fa-user font-30 color-green-dark"></i>
-                                <p class="font-11 font-700"></p>
-                            </div>
-                            <div class="col">
-                                <h4 class="font-11 font-700 text-uppercase">PASSWORD</h4>
-                                <i class="fal fa-key font-30 color-green-dark"></i>
-                                <p class="font-11 font-700"></p>
+                <div class="collapse" id="collapse-ggbook">
+                    <div class="card card-style disabled" data-mode="setup" data-setup-name="operator">
+                        <div class="content mb-2">
+                            <div class="row mb-0 text-center">
+                                <div class="col">
+                                    <h4 class="font-11 font-700 text-uppercase">OPERATOR</h4>
+                                    <i class="fal fa-user font-30 color-green-dark"></i>
+                                    <p class="font-11 font-700"></p>
+                                </div>
+                                <div class="col">
+                                    <h4 class="font-11 font-700 text-uppercase">PASSWORD</h4>
+                                    <i class="fal fa-key font-30 color-green-dark"></i>
+                                    <p class="font-11 font-700"></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card card-style disabled" data-mode="worker" data-worker-name="connection">
-                    <div class="content mb-2">
-                        <h2>Connection</h2>
-                        <div class="list-group list-custom-small list-icon-0">
-                            <a href="#">
-                                <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
-                                <span>Gizmo API</span>
-                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                            </a>
-                            <a href="#">
-                                <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
-                                <span>Gizmo Database</span>
-                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                            </a>
-                            <a href="#">
-                                <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
-                                <span>Gizmo SignalR</span>
-                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                            </a>
-                            <a class="border-0" href="#">
-                                <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
-                                <span>GGBook Server</span>
-                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                            </a>
+                    <div class="card card-style disabled" data-mode="worker" data-worker-name="connection">
+                        <div class="content mb-2">
+                            <div class="list-group list-custom-small list-icon-0">
+                                <a href="#">
+                                    <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
+                                    <span>Gizmo API</span>
+                                    <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                                </a>
+                                <a href="#">
+                                    <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
+                                    <span>Gizmo Database</span>
+                                    <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                                </a>
+                                <a href="#">
+                                    <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
+                                    <span>Gizmo SignalR</span>
+                                    <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                                </a>
+                                <a class="border-0" href="#">
+                                    <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
+                                    <span>GGBook Server</span>
+                                    <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="card card-style disabled" data-mode="setup" data-setup-name="connection">
-                    <div class="content mb-2">
-                        <h2>Connection</h2>
-                        <div class="list-group list-custom-small list-icon-0">
-                            <a href="#">
-                                <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
-                                <span>Gizmo Software</span>
-                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                            </a>
-                            <a href="#">
-                                <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
-                                <span>Config</span>
-                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                            </a>
-                            <a href="#">
-                                <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
-                                <span>Database</span>
-                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                            </a>
-                            <a href="#">
-                                <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
-                                <span>Hosts</span>
-                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                            </a>
-                            <a href="#">
-                                <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
-                                <span>Operator</span>
-                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                            </a>
-                            <a href="#">
-                                <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
-                                <span>API</span>
-                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                            </a>
-                            <a class="border-0" href="#">
-                                <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
-                                <span>Version</span>
-                                <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
-                            </a>
+                    <div class="card card-style disabled" data-mode="setup" data-setup-name="connection">
+                        <div class="content mb-2">
+                            <div class="list-group list-custom-small list-icon-0">
+                                <a href="#">
+                                    <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
+                                    <span>Gizmo Software</span>
+                                    <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                                </a>
+                                <a href="#">
+                                    <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
+                                    <span>Config</span>
+                                    <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                                </a>
+                                <a href="#">
+                                    <i class="fal font-14 fa-server rounded-s color-blue-dark"></i>
+                                    <span>Database</span>
+                                    <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                                </a>
+                                <a href="#">
+                                    <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
+                                    <span>Hosts</span>
+                                    <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                                </a>
+                                <a href="#">
+                                    <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
+                                    <span>Operator</span>
+                                    <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                                </a>
+                                <a href="#">
+                                    <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
+                                    <span>API</span>
+                                    <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                                </a>
+                                <a class="border-0" href="#">
+                                    <i class="fal font-14  fa-server rounded-s color-blue-dark"></i>
+                                    <span>Version</span>
+                                    <span class="badge text-uppercase bg-yellow-dark">Waiting...</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -187,6 +187,24 @@
                     </div>
                 </div>
             </div> -->
+
+            <div class="card card-style">
+                <div class="content mb-0 mt-2">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h2>Logs</h2>
+                        </div>
+                        <div class="flex-shrink-1 mt-1">
+                            <a href="#"
+                                onclick='domConsole = document.getElementById("logs-content");domConsole.scrollTop = domConsole.scrollHeight;'
+                                data-menu="menu-share" class="icon icon-xs rounded-xl shadow-m ms-2 bg-highlight"><i
+                                    class="fa fa-angle-down"></i></a>
+                        </div>
+                    </div>
+                    <div class="overflow-scroll" style="height: 150px; max-height: 150px;" id="logs-content">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- 

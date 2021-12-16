@@ -52,6 +52,9 @@ module.exports = {
     GGBOOK_DOWNLOAD_URL: 'https://ggbook.ru/downloads/ggbook/stable/ggbook.exe',
     GGBOOK_UPDATE_URL: 'https://ggbook.ru/downloads/ggbook/update',
 
+    GGBOOK_OLD_PATH: 'C:\\Program Files (x86)\\GCGApp\\GGBook',
+    GGBOOK_OLD_ADDONS_PATH: 'C:\\Program Files (x86)\\GCGApp\\GGBook\\signals',
+
     HOME_PAGE_URL: 'https://ggbook.ru',
 
     OS_SYSARCH: arch() === 'x64' ? 'x64' : 'ia32',

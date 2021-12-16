@@ -2,11 +2,68 @@ const electron = require("electron")
 const fs = require("fs")
 const ipcRenderer = electron.ipcRenderer;
 const config = require('../../config')
+const moment = require('moment-timezone')
 
 document.addEventListener('DOMContentLoaded', () => {
+    ipcRenderer.send('ipcReady')
+    ipcRenderer.on("error", (event, data) => {
+        console.log(data)
+        var createElement = function (tagName, className, text) {
+            var newElement = document.createElement(tagName),
+                curTime = moment().format("HH:mm:ss") + " | ";
+            if (className) newElement.setAttribute('class', className);
 
-    const oldHTML = document.querySelector(".page-content").innerHTML
-    const oldSetupConnectionHTML = document.querySelector('[data-setup-name="connection"]').innerHTML
+            var dateHTML = document.createElement("b")
+            dateHTML.setAttribute('class', 'opacity-60 color-white')
+            dateHTML.appendChild(document.createTextNode(curTime))
+
+            newElement.appendChild(dateHTML)
+            newElement.appendChild(document.createTextNode(text));
+
+            return newElement;
+        }
+
+        var newline,
+            color,
+            domConsole = document.getElementById("logs-content");
+        if (typeof data == "array") color = "color-blue-dark"
+        else if (typeof data == "object") color = "color-red-dark"
+
+        if (domConsole.querySelectorAll("p").length > 60) domConsole.removeChild(domConsole.querySelectorAll("p")[0])
+
+        newline = createElement('p', 'opacity-90 mb-0 ' + color, data);
+        domConsole.appendChild(newline);
+    })
+
+    ipcRenderer.on("log", (event, ...data) => {
+        var createElement = function (tagName, className, text) {
+            var newElement = document.createElement(tagName),
+                curTime = moment().format("HH:mm:ss") + " | ";
+            if (className) newElement.setAttribute('class', className);
+
+            var dateHTML = document.createElement("b")
+            dateHTML.setAttribute('class', 'opacity-60 color-white')
+            dateHTML.appendChild(document.createTextNode(curTime))
+
+            newElement.appendChild(dateHTML)
+            newElement.appendChild(document.createTextNode(text));
+
+            return newElement;
+        }
+
+        var newline,
+            color,
+            domConsole = document.getElementById("logs-content");
+        if (typeof data == "array") color = "color-blue-dark"
+        else if (typeof data == "object") color = "color-green-dark"
+
+        if (domConsole.querySelectorAll("p").length > 10) domConsole.removeChild(domConsole.querySelectorAll("p")[0])
+
+        newline = createElement('p', 'opacity-90 mb-0 ' + color, data);
+        domConsole.appendChild(newline);
+    })
+    // const oldHTML = document.querySelector(".page-content").innerHTML
+    // const oldSetupConnectionHTML = document.querySelector('[data-setup-name="connection"]').innerHTML
 
     ipcRenderer.send("get:cache:collection")
 
