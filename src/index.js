@@ -8,6 +8,7 @@ const ggbook = require('./main/ggbook')
 const windows = require('./main/windows')
 const startup = require('./main/startup')
 const wincmd = require('node-windows');
+const log = require("./main/log")
 
 const config = require('./config')
 const settings = JSON.parse(windows.main.loadSettings())

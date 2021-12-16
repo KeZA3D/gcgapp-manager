@@ -43,7 +43,8 @@ function init(state, options) {
         title: config.APP_WINDOW_TITLE,
         titleBarStyle: 'hiddenInset', // Hide title bar (Mac)
         useContentSize: true, // Specify web page size without OS chrome
-        width: 1200,
+        width: 600,
+        resizable: false,
         autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: true,
@@ -55,7 +56,7 @@ function init(state, options) {
     })
     win.setMenu(null)
     require('@electron/remote/main').enable(win.webContents)
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
     win.loadURL(config.WINDOW_MAIN)
 
     win.once('ready-to-show', () => {

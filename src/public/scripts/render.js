@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         domConsole.appendChild(newline);
     })
     // const oldHTML = document.querySelector(".page-content").innerHTML
-    // const oldSetupConnectionHTML = document.querySelector('[data-setup-name="connection"]').innerHTML
+    const oldSetupConnectionHTML = document.querySelector('[data-setup-name="connection"]').innerHTML
 
     ipcRenderer.send("get:cache:collection")
 
