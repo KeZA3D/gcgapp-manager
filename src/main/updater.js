@@ -95,7 +95,7 @@ function initUpdater(opts) {
 function validateInput(opts) {
   const defaults = {
     host: 'https://update.electronjs.org',
-    updateInterval: '10 minutes',
+    updateInterval: '5 hours',
     logger: console,
     notifyUser: true
   }

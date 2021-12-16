@@ -156,7 +156,7 @@ async function checkUpdates(forceInit = false) {
 function oldDirectoryImport() {
     const oldConfigPath = path.join(GGBOOK_OLD_PATH, "config.json")
     const oldSetupPath = path.join(GGBOOK_OLD_PATH, "setup.json")
-    const oldProcessPath = path.join(GGBOOK_OLD_PATH, "setup.json")
+    // const oldProcessPath = path.join(GGBOOK_OLD_PATH, "setup.json")
     const oldAddonsPath = path.join(GGBOOK_OLD_ADDONS_PATH, "index.js")
     if (!fs.existsSync(GGBOOK_CONFIG_PATH) && fs.existsSync(oldConfigPath)) {
         log("Importing GGBook Config File")
@@ -165,10 +165,6 @@ function oldDirectoryImport() {
     if (!fs.existsSync(GGBOOK_SETUP_PATH) && fs.existsSync(oldSetupPath)) {
         log("Importing GGBook Setup File")
         fs.copyFileSync(oldSetupPath, GGBOOK_SETUP_PATH)
-    }
-    if (!fs.existsSync(GGBOOK_PATH) && fs.existsSync(oldProcessPath)) {
-        log("Importing GGBook Process File")
-        fs.copyFileSync(oldProcessPath, GGBOOK_PATH)
     }
     if (!fs.existsSync(GGBOOK_OLD_ADDONS_PATH) && fs.existsSync(oldAddonsPath)) {
         log("Importing GGBook Addons File")
