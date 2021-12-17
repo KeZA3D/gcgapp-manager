@@ -4,6 +4,7 @@ module.exports = {
 }
 
 const { app, ipcMain } = require('electron')
+const ggbook = require('./ggbook')
 
 const log = require('./log')
 const menu = require('./menu')
@@ -60,6 +61,19 @@ function init() {
     ipcMain.on('show', () => main.show())
     ipcMain.on('toggleFullScreen', (e, ...args) => main.toggleFullScreen(...args))
     ipcMain.on('setAllowNav', (e, ...args) => menu.setAllowNav(...args))
+
+    /**
+     * GGBook
+     */
+
+    ipcMain.on('downloadModuleGGBook', (e, ...args) => ggbook.init(...args))
+    ipcMain.on('delModuleGGBook', (e, ...args) => ggbook.del(...args))
+    ipcMain.on('startModuleGGBook', (e, ...args) => ggbook.init(...args))
+    ipcMain.on('restartModuleGGBook', (e, ...args) => ggbook.restart(...args))
+    ipcMain.on('stopModuleGGBook', (e, ...args) => ggbook.stop(...args))
+    ipcMain.on('setModuleGGBookStartup', () => ggbook.setStartup())
+    ipcMain.on('setModuleGGBookConfigValues', (e, ...args) => ggbook.setConfigValues(...args))
+    ipcMain.on('setModuleGGBookSetupValues', (e, ...args) => ggbook.setSetupValues(...args))
 
     /**
      * Message passing
