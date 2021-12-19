@@ -19,6 +19,7 @@ const main = module.exports = {
 
 const { app, BrowserWindow, screen } = require('electron')
 const debounce = require('debounce')
+const isDev = require('electron-is-dev')
 const { download } = require("electron-dl");
 
 const config = require('../../config')
@@ -32,7 +33,7 @@ function init(state, options) {
         return main.win.show()
     }
 
-    const win = main.win = new BrowserWindow({
+    options = {
         backgroundColor: '#282828',
         darkTheme: true, // Forces dark theme (GTK+3)
         height: 800,
@@ -53,10 +54,21 @@ function init(state, options) {
             backgroundThrottling: false,
             preload: config.RENDER_JS
         },
-    })
+        ...options
+    }
+
+    if (isDev) {
+        delete options.titleBarStyle
+        delete options.autoHideMenuBar
+        options.width = 1280
+    }
+
+    const win = main.win = new BrowserWindow(options)
     win.setMenu(null)
     require('@electron/remote/main').enable(win.webContents)
-    // win.webContents.openDevTools()
+
+    if (isDev) win.webContents.openDevTools()
+
     win.loadURL(config.WINDOW_MAIN)
 
     win.once('ready-to-show', () => {

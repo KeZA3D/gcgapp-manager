@@ -1,7 +1,7 @@
 const electron = require("electron")
-const fs = require("fs")
+// const fs = require("fs")
 const ipcRenderer = electron.ipcRenderer;
-const config = require('../../config')
+// const config = require('../../config')
 const moment = require('moment-timezone')
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -112,6 +112,12 @@ document.addEventListener('DOMContentLoaded', () => {
     ipcRenderer.on('process:mode', (event, data) => {
         data = JSON.parse(data)
         console.log(data)
+        const projectHTML = document.querySelector("div[data-module='ggbook']")
+
+        projectHTML.querySelector('a[data-bs-toggle="collapse"]').children[0].classList.remove("gradient-yellow", "gradient-blue")
+        projectHTML.querySelector('a[data-bs-toggle="collapse"]').children[0].classList.add("gradient-green")
+        projectHTML.querySelector('a[data-bs-toggle="collapse"]').children[0].children[0].classList.remove("fa-spin")
+
         if (data == "setup") {
             document.querySelectorAll("[data-mode='setup']").forEach(element => {
                 element.classList.remove("disabled")
@@ -223,35 +229,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
     ipcRenderer.on('process', (event, data) => {
         data = JSON.parse(data)
-        const projectHTML = document.querySelector("a[href='#collapse-" + data.moduleName + "']")
+        const projectHTML = document.querySelector("div[data-module='" + data.moduleName + "']")
         // projectHTML.querySelector("div[data-project-type='app-status']").classList.add("disabled")
         const downloadHTML = projectHTML.querySelector("div[data-project-type='app-download']")
         const appStatusHTML = projectHTML.querySelector("div[data-project-type='app-status']")
         console.log(data);
         switch (data.event) {
             case "spawned":
+                projectHTML.querySelector('a[data-bs-toggle="collapse"]').children[0].classList.remove("gradient-blue", "gradient-green")
+                projectHTML.querySelector('a[data-bs-toggle="collapse"]').children[0].classList.add("gradient-yellow")
+                projectHTML.querySelector('a[data-bs-toggle="collapse"]').children[0].children[0].classList.add("fa-spin")
                 downloadHTML.classList.add("disabled")
                 appStatusHTML.classList.remove("disabled")
-                appStatusHTML.querySelector("span[data-title='stop']").classList.add("disabled")
-                appStatusHTML.querySelector("span[data-title='restart']").classList.add("disabled")
-                appStatusHTML.querySelector("span[data-title='active']").classList.remove("disabled")
-                appStatusHTML.querySelector("span[data-title='v']").innerHTML = data.version
+                // appStatusHTML.querySelector("span[data-title='stop']").classList.add("disabled")
+                // appStatusHTML.querySelector("span[data-title='restart']").classList.add("disabled")
+                // appStatusHTML.querySelector("span[data-title='active']").classList.remove("disabled")
+                document.querySelector('[data-module-version="ggbook"]').innerHTML = data.version
                 break;
             // case "error":
             //     break;
             case "restart":
                 downloadHTML.classList.add("disabled")
                 appStatusHTML.classList.remove("disabled")
-                appStatusHTML.querySelector("span[data-title='stop']").classList.add("disabled")
-                appStatusHTML.querySelector("span[data-title='restart']").classList.remove("disabled")
-                appStatusHTML.querySelector("span[data-title='active']").classList.add("disabled")
+                projectHTML.querySelector('a[data-bs-toggle="collapse"]').children[0].classList.remove("gradient-blue", "gradient-green")
+                projectHTML.querySelector('a[data-bs-toggle="collapse"]').children[0].classList.add("gradient-yellow")
+                projectHTML.querySelector('a[data-bs-toggle="collapse"]').children[0].children[0].classList.add("fa-spin")
+                // appStatusHTML.querySelector("span[data-title='stop']").classList.add("disabled")
+                // appStatusHTML.querySelector("span[data-title='restart']").classList.remove("disabled")
+                // appStatusHTML.querySelector("span[data-title='active']").classList.add("disabled")
                 break;
             case "update":
+                projectHTML.querySelector('a[data-bs-toggle="collapse"]').children[0].classList.remove("gradient-blue", "gradient-green")
+                projectHTML.querySelector('a[data-bs-toggle="collapse"]').children[0].classList.add("gradient-yellow")
+                projectHTML.querySelector('a[data-bs-toggle="collapse"]').children[0].children[0].classList.add("fa-spin")
                 downloadHTML.classList.remove("disabled")
                 appStatusHTML.classList.add("disabled")
-                appStatusHTML.querySelector("span[data-title='stop']").classList.add("disabled")
-                appStatusHTML.querySelector("span[data-title='restart']").classList.add("disabled")
-                appStatusHTML.querySelector("span[data-title='active']").classList.add("disabled")
+                // appStatusHTML.querySelector("span[data-title='stop']").classList.add("disabled")
+                // appStatusHTML.querySelector("span[data-title='restart']").classList.add("disabled")
+                // appStatusHTML.querySelector("span[data-title='active']").classList.add("disabled")
 
                 projectHTML.querySelector("[data-title='du']").classList.remove("disabled")
                 projectHTML.querySelector("[data-title='d']").classList.add("disabled")
@@ -275,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     ipcRenderer.on('download', (event, data) => {
         data = JSON.parse(data)
-        const projectHTML = document.querySelector("a[href='#collapse-" + data.moduleName + "']")
+        const projectHTML = document.querySelector("div[data-module='" + data.moduleName + "']")
         projectHTML.querySelector("div[data-project-type='app-status']").classList.add("disabled")
         const downloadHTML = projectHTML.querySelector("div[data-project-type='app-download']")
         downloadHTML.classList.remove("disabled")
@@ -290,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     ipcRenderer.on('download-progress', (event, data) => {
         data = JSON.parse(data)
-        const projectHTML = document.querySelector("a[href='#collapse-" + data.moduleName + "']")
+        const projectHTML = document.querySelector("div[data-module='" + data.moduleName + "']")
         const downloadHTML = projectHTML.querySelector("div[data-project-type='app-download']")
 
         console.log(data)
@@ -317,4 +332,20 @@ document.addEventListener('DOMContentLoaded', () => {
     //     e.returnValue = true
     // })
 
+    document.querySelector('[data-restart-process]').addEventListener('click', function () {
+        const process = this.dataset.restartProcess
+        if (process == "ggbook") ipcRenderer.send('restartModuleGGBook')
+    })
+    document.querySelector('[data-stop-process]').addEventListener('click', function () {
+        const process = this.dataset.stopProcess
+        if (process == "ggbook") ipcRenderer.send('stopModuleGGBook')
+    })
+    document.querySelector('[data-download-process]').addEventListener('click', function () {
+        const process = this.dataset.downloadProcess
+        if (process == "ggbook") ipcRenderer.send('downloadModuleGGBook')
+    })
+    document.querySelector('[data-startup-process]').addEventListener('click', function () {
+        const process = this.dataset.startupProcess
+        if (process == "ggbook") ipcRenderer.send('setModuleGGBookStartup')
+    })
 });

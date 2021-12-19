@@ -9,6 +9,7 @@ const windows = require('./main/windows')
 const startup = require('./main/startup')
 const wincmd = require('node-windows');
 const log = require("./main/log")
+const isDev = require("electron-is-dev")
 
 const config = require('./config')
 const settings = JSON.parse(windows.main.loadSettings())
@@ -31,6 +32,12 @@ wincmd.isAdminUser((isAdmin) => {
     app.quit()
   }
 })
+
+require('./main/updater')({
+  repo: 'KeZA3D/gcgapp-manager',
+  updateInterval: '5 hours'
+})
+
 
 if (!shouldQuit && !app.requestSingleInstanceLock()) {
   shouldQuit = true
@@ -62,7 +69,7 @@ async function init() {
     // To keep app startup fast, some code is delayed.
     setTimeout(() => {
       delayedInit()
-    }, config.DELAYED_INIT)
+    }, isDev == true ? 100 : config.DELAYED_INIT)
   }
 
   app.setAppLogsPath()
@@ -89,12 +96,6 @@ async function init() {
 
 function delayedInit() {
   if (app.isQuitting) return
-
-  require('./main/updater')({
-    repo: 'KeZA3D/gcgapp-manager',
-    updateInterval: '5 hours',
-    notifyUser: false
-  })
 
   const ggbookUpdates = () => {
     return new Promise((resolve, reject) => {

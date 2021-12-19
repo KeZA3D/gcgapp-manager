@@ -3,6 +3,11 @@ const ggbook = module.exports = {
     isDownloaded,
     isAuthorized,
     checkUpdates,
+    download,
+    del,
+    del,
+    restart,
+    stop,
     process: null
 }
 
@@ -14,6 +19,8 @@ const log = require('./log')
 const path = require("path")
 const cp = require("child_process")
 const fetch = require("node-fetch")
+const isDev = require('electron-is-dev')
+const skipModules = isDev && process.argv.find((e) => e == "--skip-modules") ? true : false
 
 var processCache = { mode: null, steps: {}, connection: { api: null, database: null, signalr: null, server: null }, operator: { username: null, password: null } }
 const moduleName = "ggbook"
@@ -26,29 +33,72 @@ function isAuthorized() {
     return fs.existsSync(GGBOOK_SETUP_PATH) && existsSync(GGBOOK_CONFIG_PATH)
 }
 
+function download() {
+    return windows.main.downloadModule(moduleName, {
+        directory: APPDATA,
+        filename: "ggbook.exe",
+        overwrite: true
+    },
+        GGBOOK_DOWNLOAD_URL,
+        async () => {
+            var setup = JSON.parse(fs.readFileSync(GGBOOK_SETUP_PATH, 'utf8'))
+            var getVersionInfo = await fetch(GGBOOK_UPDATE_URL)
+            if (getVersionInfo.ok === false) throw new Error("Failed to check software version: site is not available!")
+            getVersionInfo = await getVersionInfo.json()
+            setup.version = getVersionInfo.version
+            fs.writeFileSync(GGBOOK_SETUP_PATH, JSON.stringify(setup, null, 4))
+            ggbook.init()
+        })
+}
+
+async function del() {
+    if (ggbook.process !== null) {
+        console.log("Closing application GGBook.exe")
+        log("(Deleting) Closing application GGBook.exe")
+        await ggbook.process.kill('SIGINT')
+        ggbook.process = null
+    }
+    after(3000, () => {
+        try {
+            fs.unlink(GGBOOK_PATH, () => windows.main.send('deteleProcess', 'ggbook'))
+        } catch (error) {
+            console.log(e)
+            log(e)
+        }
+    })
+}
+
+async function restart() {
+    windows.main.send('restartProcess', 'ggbook')
+    if (ggbook.process !== null) {
+        console.log("Closing application GGBook.exe")
+        log("(Restarting) Closing application GGBook.exe")
+        await ggbook.process.kill('SIGINT')
+        ggbook.process = null
+    }
+    after(2000, ggbook.init)
+}
+
+async function stop() {
+    if (ggbook.process !== null) {
+        console.log("Closing application GGBook.exe")
+        log("(Stopping) Closing application GGBook.exe")
+        await ggbook.process.kill('SIGINT')
+        ggbook.process = null
+    }
+    windows.main.send('stopProcess', 'ggbook')
+}
+
 function init() {
-    ggbook.updating = false
     oldDirectoryImport()
     if (fs.existsSync(GGBOOK_SETUP_PATH) == false) {
         fs.writeFileSync(GGBOOK_SETUP_PATH, JSON.stringify(DEFAULT_SETUP_DATA))
     }
-    if (!isDownloaded()) {
-        ggbook.updating = true
-        return windows.main.downloadModule(moduleName, {
-            directory: APPDATA,
-            filename: "ggbook.exe"
-        },
-            GGBOOK_DOWNLOAD_URL,
-            async () => {
-                var setup = JSON.parse(fs.readFileSync(GGBOOK_SETUP_PATH, 'utf8'))
-                var getVersionInfo = await fetch(GGBOOK_UPDATE_URL)
-                if (getVersionInfo.ok === false) throw new Error("Failed to check software version: site is not available!")
-                getVersionInfo = await getVersionInfo.json()
-                setup.version = getVersionInfo.version
-                fs.writeFileSync(GGBOOK_SETUP_PATH, JSON.stringify(setup, null, 4))
-                ggbook.init()
-            })
+    if (!isDownloaded() && !skipModules) {
+        return ggbook.download()
     }
+
+    if (skipModules) return emulateSpawn();
 
     const setupConfig = JSON.parse(fs.readFileSync(GGBOOK_SETUP_PATH, "utf8"))
 
@@ -117,7 +167,6 @@ function init() {
 
 async function checkUpdates(forceInit = false) {
     if (!fs.existsSync(GGBOOK_SETUP_PATH) || !fs.existsSync(GGBOOK_PATH)) {
-        ggbook.updating = false;
         return false;
     }
     var setup = JSON.parse(fs.readFileSync(GGBOOK_SETUP_PATH, 'utf8'))
@@ -185,3 +234,17 @@ function isJson(str) {
     }
     return false;
 }
+
+function emulateSpawn() {
+    log("Emulating spawn, please wait...")
+    windows.main.dispatch('emulateGGBook')
+    windows.main.send('process', JSON.stringify({ event: "spawned", moduleName: moduleName, version: "Emulation" }))
+    windows.main.send('process:mode', JSON.stringify("worker"))
+    windows.main.send(`process:connection`, JSON.stringify("gizmo:api:connected"))
+    windows.main.send(`process:connection`, JSON.stringify("gizmo:database:connected"))
+    windows.main.send(`process:connection`, JSON.stringify("gizmo:signalr:connected"))
+    windows.main.send(`process:connection`, JSON.stringify("ggbook:server:connected"))
+
+}
+
+function after(ms, fn) { setTimeout(fn, ms); }

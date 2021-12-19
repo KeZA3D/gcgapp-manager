@@ -5,6 +5,8 @@ module.exports = {
 
 const { app, ipcMain } = require('electron')
 const ggbook = require('./ggbook')
+const fs = require("fs")
+const { GGBOOK_PATH, GGBOOK_CONFIG_PATH, GGBOOK_SETUP_PATH, APPDATA, DEFAULT_SETUP_DATA, GGBOOK_DOWNLOAD_URL, GGBOOK_UPDATE_URL, GGBOOK_OLD_PATH, GGBOOK_OLD_ADDONS_PATH } = require('../config')
 
 const log = require('./log')
 const menu = require('./menu')
@@ -66,12 +68,19 @@ function init() {
      * GGBook
      */
 
-    ipcMain.on('downloadModuleGGBook', (e, ...args) => ggbook.init(...args))
-    ipcMain.on('delModuleGGBook', (e, ...args) => ggbook.del(...args))
-    ipcMain.on('startModuleGGBook', (e, ...args) => ggbook.init(...args))
-    ipcMain.on('restartModuleGGBook', (e, ...args) => ggbook.restart(...args))
-    ipcMain.on('stopModuleGGBook', (e, ...args) => ggbook.stop(...args))
-    ipcMain.on('setModuleGGBookStartup', () => ggbook.setStartup())
+    ipcMain.on('downloadModuleGGBook', (s) => ggbook.download())
+    ipcMain.on('delModuleGGBook', () => ggbook.del())
+    ipcMain.on('startModuleGGBook', () => ggbook.init())
+    ipcMain.on('restartModuleGGBook', () => ggbook.restart())
+    ipcMain.on('stopModuleGGBook', () => ggbook.stop())
+    ipcMain.on('setModuleGGBookStartup', (e, flag) => {
+        const pathTo = fs.join(APPDATA, "settings.json");
+        const settings = JSON.parse(fs.readFileSync(pathTo, 'utf8'))
+        if (flag) settings.projectAutoStart.ggbook = true
+        else settings.projectAutoStart.ggbook = false
+
+        fs.writeFile(pathTo, JSON.stringify(settings))
+    })
     ipcMain.on('setModuleGGBookConfigValues', (e, ...args) => ggbook.setConfigValues(...args))
     ipcMain.on('setModuleGGBookSetupValues', (e, ...args) => ggbook.setSetupValues(...args))
 

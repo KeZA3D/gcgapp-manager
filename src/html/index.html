@@ -42,14 +42,16 @@
                         </div>
                         <div class="divider mb-3"></div>
 
-                        <a href="#collapse-ggbook" class="d-flex mb-4" data-bs-toggle="collapse">
-                            <div class="align-self-center">
+                        <div class="d-flex mb-4" data-module="ggbook">
+                            <a href="#collapse-ggbook" class="align-self-center" data-bs-toggle="collapse">
                                 <span
                                     class="icon icon-l gradient-blue shadow-bg shadow-bg-s rounded-m color-white me-3"><i
-                                        class="fa fa-cog"></i></span>
-                            </div>
+                                        class="fal fa-cog"></i></span>
+                            </a>
                             <div class="align-self-center w-100">
-                                <h5>GGBook</h5>
+                                <h3 class="mt-n2 mb-n1 font-18">GGBook</h3>
+                                <span class="color-theme font-10 opacity-40 font-400"
+                                    data-module-version="ggbook">1</span>
                                 <div class="disabled" data-project-type="app-download">
                                     <div class="progress mt-2 mb-1" style="height:3px;">
                                         <div class="progress-bar progress-bar-animated progress-bar-striped border-0 bg-blue-dark text-start ps-2"
@@ -68,24 +70,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="disabled" data-project-type="app-status">
-                                    <div class="row mb-0">
-                                        <div class="col-6 text-start">
-                                            <span class="font-12 opacity-70" data-title="v"></span>
-                                        </div>
-                                        <div class="col-6 text-end">
-                                            <span class="badge bg-red-dark font-12" data-title="stop">Stopped</span>
-                                            <span class="badge bg-green-dark font-12 disabled"
-                                                data-title="active">Active</span>
-                                            <span class="badge bg-yellow-dark font-12 disabled"
-                                                data-title="restart">Restarting</span>
-                                        </div>
-                                    </div>
+                            </div>
+                            <div class="disabled align-self-center ms-auto" data-project-type="app-status">
+                                <!-- <span class="badge bg-red-dark font-12" data-title="stop">Stopped</span> -->
+                                <!-- <span class="badge bg-green-dark font-12 disabled" data-title="active">Active</span> -->
+                                <!-- <span class="badge bg-yellow-dark font-12 disabled" -->
+                                <!-- data-title="restart">Restarting</span> -->
+                                <div class="d-flex">
+                                    <a href="#" data-menu="menu-restart-ggbook"
+                                        class="icon icon-xs rounded-xl shadow-m ms-2 bg-yellow-dark"><i
+                                            class="fal fa-redo"></i></a>
+                                    <a href="#" data-menu="menu-stop-ggbook"
+                                        class="icon icon-xs rounded-xl shadow-m ms-2 bg-red-dark"><i
+                                            class="fal fa-power-off"></i></a>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     </div>
-                    </a>
                 </div>
                 <div class="collapse" id="collapse-ggbook">
                     <div class="card card-style disabled" data-mode="setup" data-setup-name="operator">
@@ -179,10 +180,10 @@
                 <div class="content mt-0 mb-0">
                     <div class="list-group list-custom-large list-icon-0">
                         <a data-menu="settings-modal" href="#">
-                            <i class="fa font-19 fa-cog rounded-s color-blue-dark"></i>
+                            <i class="fal font-19 fa-cog rounded-s color-blue-dark"></i>
                             <span>Settings</span>
                             <strong>Details about service config</strong>
-                            <i class="fa fa-chevron-right opacity-30 mt-1"></i>
+                            <i class="fal fa-chevron-right opacity-30 mt-1"></i>
                         </a>
                     </div>
                 </div>
@@ -194,12 +195,12 @@
                         <div class="flex-grow-1">
                             <h2>Logs</h2>
                         </div>
-                        <div class="flex-shrink-1 mt-1">
+                        <!-- <div class="flex-shrink-1 mt-1">
                             <a href="#"
                                 onclick='domConsole = document.getElementById("logs-content");domConsole.scrollTop = domConsole.scrollHeight;'
                                 data-menu="menu-share" class="icon icon-xs rounded-xl shadow-m ms-2 bg-highlight"><i
-                                    class="fa fa-angle-down"></i></a>
-                        </div>
+                                    class="fal fa-angle-down"></i></a>
+                        </div> -->
                     </div>
                     <div class="overflow-scroll" style="height: 150px; max-height: 150px;" id="logs-content">
                     </div>
@@ -211,7 +212,7 @@
     <div id="settings-modal" class="menu menu-box-modal menu-box-detached rounded-m">
         <div class="menu-title mt-n1">
             <h1>Settings</h1>
-            <a href="#" class="close-menu"><i class="fa fa-times"></i></a>
+            <a href="#" class="close-menu"><i class="fal fa-times"></i></a>
         </div>
 
         <form method="post" id="promocode-form" class="content">
@@ -247,6 +248,40 @@
             </div>
         </form>
     </div> -->
+
+    <div id="menu-stop-ggbook" class="menu menu-box-modal menu-box-detached rounded-m" style="display: block;">
+        <i class="fal fa-exclamation color-red-dark fa-4x d-block text-center pt-4 mt-2 pb-2"></i>
+        <h2 class="text-center mt-3 pt-1 font-700 font-27">Stop GGBook Process?</h2>
+        <p class="boxed-text-l">
+            Confirm the completion of the process.
+        </p>
+        <div class="row me-3 ms-3 mb-3">
+            <div class="col-6"><a href="#" data-stop-process="ggbook"
+                    class="close-menu btn btn-sm btn-full button-s shadow-l rounded-s text-uppercase font-900 border-green-dark color-green-dark">Yes</a>
+            </div>
+            <div class="col-6"><a href="#"
+                    class="close-menu btn btn-sm btn-full button-s shadow-l rounded-s text-uppercase font-900 border-red-dark color-red-dark">No</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="menu-restart-ggbook" class="menu menu-box-modal menu-box-detached rounded-m" style="display: block;">
+        <i class="fal fa-exclamation color-yellow-dark fa-4x d-block text-center pt-4 mt-2 pb-2"></i>
+        <h2 class="text-center mt-3 pt-1 font-700 font-27">Restart GGBook process?</h2>
+        <p class="boxed-text-l">
+            Confirm restarting the process.
+        </p>
+        <div class="row me-3 ms-3 mb-3">
+            <div class="col-6"><a href="#" data-restart-process="ggbook"
+                    class="close-menu btn btn-sm btn-full button-s shadow-l rounded-s text-uppercase font-900 border-green-dark color-green-dark">Yes</a>
+            </div>
+            <div class="col-6"><a href="#"
+                    class="close-menu btn btn-sm btn-full button-s shadow-l rounded-s text-uppercase font-900 border-red-dark color-red-dark">No</a>
+            </div>
+        </div>
+    </div>
+
+
     <script type="text/javascript" src="../public/scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="../public/scripts/custom.js"></script>
     <div class="menu-hider"></div>
