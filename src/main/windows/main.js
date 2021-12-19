@@ -216,7 +216,7 @@ async function updateModule(moduleName, properties, url, cb = function (dl) { })
 function loadSettings() {
     const file = path.join(config.APPDATA, "settings.json");
     if (!fs.existsSync(file)) {
-        fs.mkdirSync(config.APPDATA)
+        if(!fs.existsSync(config.APPDATA)) fs.mkdirSync(config.APPDATA)
         fs.writeFileSync(file, JSON.stringify(config.DEFAULT_SETTINGS_DATA))
     }
     return fs.readFileSync(file, 'utf8')

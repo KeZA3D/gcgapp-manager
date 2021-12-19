@@ -314,9 +314,64 @@ document.addEventListener('DOMContentLoaded', () => {
         projectHTML.querySelector("[data-title='p']").innerHTML = value
     })
 
+    ipcRenderer.on('stopProcess', (event, data) => {
+        const moduleName = data;
+
+        document.querySelector(`[data-menu='menu-restart-${moduleName}']`)?.classList.add("disabled")
+        document.querySelector(`[data-menu='menu-stop-${moduleName}']`)?.classList.add("disabled")
+        document.querySelector(`[data-download-process=${moduleName}]`)?.classList.add("disabled")
+
+        document.querySelector(`[data-start-process=${moduleName}]`)?.classList.remove("disabled")
+    })
+
+    ipcRenderer.on('startProcess', (event, data) => {
+        const moduleName = data;
+
+        document.querySelector(`[data-menu='menu-restart-${moduleName}']`)?.classList.remove("disabled")
+        document.querySelector(`[data-menu='menu-stop-${moduleName}']`)?.classList.remove("disabled")
+
+        document.querySelector(`[data-download-process=${moduleName}]`)?.classList.add("disabled")
+        document.querySelector(`[data-start-process=${moduleName}]`)?.classList.add("disabled")
+    })
+
+    ipcRenderer.on('restartProcess', (event, data) => {
+        const moduleName = data;
+
+        const projectHTML = document.querySelector("div[data-module='" + moduleName + "']")
+        projectHTML.querySelector('a[data-bs-toggle="collapse"]').children[0].classList.remove("gradient-blue", "gradient-green")
+        projectHTML.querySelector('a[data-bs-toggle="collapse"]').children[0].classList.add("gradient-yellow")
+        projectHTML.querySelector('a[data-bs-toggle="collapse"]').children[0].children[0].classList.add("fa-spin")
+    })
+    ipcRenderer.on('deleteProcess', (event, data) => { })
+
+    ipcRenderer.on('notDownloadedModule', (event, data) => { 
+        const moduleName = data;
+
+        document.querySelector("div[data-module='" + moduleName + "']").querySelector("div[data-project-type='app-status']").classList.remove("disabled")
+
+        document.querySelector(`[data-menu='menu-restart-${moduleName}']`)?.classList.add("disabled")
+        document.querySelector(`[data-menu='menu-stop-${moduleName}']`)?.classList.add("disabled")
+
+        document.querySelector(`[data-download-process=${moduleName}]`)?.classList.remove("disabled")
+        document.querySelector(`[data-start-process=${moduleName}]`)?.classList.add("disabled")
+    })
+
+    ipcRenderer.on('notStartedModule', (event, data) => { 
+        const moduleName = data;
+
+        document.querySelector("div[data-module='" + moduleName + "']").querySelector("div[data-project-type='app-status']").classList.remove("disabled")
+
+        document.querySelector(`[data-menu='menu-restart-${moduleName}']`)?.classList.add("disabled")
+        document.querySelector(`[data-menu='menu-stop-${moduleName}']`)?.classList.add("disabled")
+
+        document.querySelector(`[data-download-process=${moduleName}]`)?.classList.add("disabled")
+        document.querySelector(`[data-start-process=${moduleName}]`)?.classList.remove("disabled")
+    })
+
+
     window.onbeforeunload = (e) => {
-        ipcRenderer.send("dom:reloading")
-        console.log("Hi")
+        // ipcRenderer.send("dom:reloading")
+        // console.log("Hi")
         //     // Unlike usual browsers that a message box will be prompted to users, returning
         //     // a non-void value will silently cancel the close.
         //     // It is recommended to use the dialog API to let the user confirm closing the
@@ -340,11 +395,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const process = this.dataset.stopProcess
         if (process == "ggbook") ipcRenderer.send('stopModuleGGBook')
     })
+    document.querySelector('[data-start-process]').addEventListener('click', function () {
+        const process = this.dataset.startProcess
+        if (process == "ggbook") ipcRenderer.send('startModuleGGBook')
+    })
+
     document.querySelector('[data-download-process]').addEventListener('click', function () {
         const process = this.dataset.downloadProcess
         if (process == "ggbook") ipcRenderer.send('downloadModuleGGBook')
     })
-    document.querySelector('[data-startup-process]').addEventListener('click', function () {
+    document.querySelector('[data-startup-process]')?.addEventListener('click', function () {
         const process = this.dataset.startupProcess
         if (process == "ggbook") ipcRenderer.send('setModuleGGBookStartup')
     })

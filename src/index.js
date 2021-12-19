@@ -110,11 +110,17 @@ function delayedInit() {
   const tray = require('./main/tray')
   tray.init()
 
-  if (!settings || settings.projectAutoStart.ggbook) {
+  if (settings.projectAutoStart.ggbook) {
     ggbook.checkUpdates(false).then(() => {
       ggbook.init()
       ggbookUpdates()
     })
+  } else if (ggbook.isDownloaded() == false) {
+    if (app.ipcReady) windows.main.send("notDownloadedModule", "ggbook")
+    else app.once('ipcReady', () => windows.main.send("notDownloadedModule", "ggbook"))
+  } else if (ggbook.isDownloaded() == true) {
+    if (app.ipcReady) windows.main.send("notStartedModule", "ggbook")
+    else app.once('ipcReady', () => windows.main.send("notStartedModule", "ggbook"))
   }
 }
 

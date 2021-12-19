@@ -90,6 +90,10 @@ async function stop() {
 }
 
 function init() {
+    if(ggbook.process !== null) return;
+
+    windows.main.send('startProcess', 'ggbook')
+    
     oldDirectoryImport()
     if (fs.existsSync(GGBOOK_SETUP_PATH) == false) {
         fs.writeFileSync(GGBOOK_SETUP_PATH, JSON.stringify(DEFAULT_SETUP_DATA))
