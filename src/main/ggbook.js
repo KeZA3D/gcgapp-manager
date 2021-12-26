@@ -8,10 +8,11 @@ const ggbook = module.exports = {
     del,
     restart,
     stop,
+    setConfigValues,
     process: null
 }
 
-const { GGBOOK_PATH, GGBOOK_CONFIG_PATH, GGBOOK_SETUP_PATH, APPDATA, DEFAULT_SETUP_DATA, GGBOOK_DOWNLOAD_URL, GGBOOK_UPDATE_URL, GGBOOK_OLD_PATH, GGBOOK_OLD_ADDONS_PATH } = require('../config')
+const { GGBOOK_PATH, GGBOOK_CONFIG_PATH, GGBOOK_SETUP_PATH, APPDATA, DEFAULT_SETUP_DATA, GGBOOK_DOWNLOAD_URL, GGBOOK_UPDATE_URL, GGBOOK_OLD_PATH, GGBOOK_ADDONS_PATH, CONFIG_PATH } = require('../config')
 const fs = require("fs")
 // const { app, ipcMain } = require('electron')
 const windows = require('./windows')
@@ -90,10 +91,10 @@ async function stop() {
 }
 
 function init() {
-    if(ggbook.process !== null) return;
+    if (ggbook.process !== null) return;
 
     windows.main.send('startProcess', 'ggbook')
-    
+
     oldDirectoryImport()
     if (fs.existsSync(GGBOOK_SETUP_PATH) == false) {
         fs.writeFileSync(GGBOOK_SETUP_PATH, JSON.stringify(DEFAULT_SETUP_DATA))
@@ -206,11 +207,44 @@ async function checkUpdates(forceInit = false) {
     }
 }
 
+function setConfigValues(data) {
+    var configFile;
+    if (fs.existsSync(GGBOOK_CONFIG_PATH)) configFile = JSON.parse(fs.readFileSync(GGBOOK_CONFIG_PATH, 'utf8'))
+    else configFile = {
+        Global: {
+            GizmoAPI: {
+                Username: null,
+                Password: null,
+                Port: null,
+            },
+            Redis: {
+                username: null,
+                password: null,
+            },
+            Secret: null,
+        }
+    }
+    configFile.Global.GizmoAPI = {
+        Username: data['web-username'],
+        Password: data['web-password'],
+        Port: data['port'],
+    }
+    configFile.Global.Redis = {
+        username: data['redis-username'],
+        password: data['redis-password'],
+    }
+    configFile.Global.Secret = data['secret']
+    configFile.Global.Domain = data['domain']
+    configFile.Global.Timezone = data['timezone']
+
+    fs.writeFileSync(GGBOOK_CONFIG_PATH, JSON.stringify(configFile))
+}
+
 function oldDirectoryImport() {
     const oldConfigPath = path.join(GGBOOK_OLD_PATH, "config.json")
     const oldSetupPath = path.join(GGBOOK_OLD_PATH, "setup.json")
     // const oldProcessPath = path.join(GGBOOK_OLD_PATH, "setup.json")
-    const oldAddonsPath = path.join(GGBOOK_OLD_ADDONS_PATH, "index.js")
+    const oldAddonsPath = path.join(GGBOOK_OLD_PATH, "signals", "index.js")
     if (!fs.existsSync(GGBOOK_CONFIG_PATH) && fs.existsSync(oldConfigPath)) {
         log("Importing GGBook Config File")
         fs.copyFileSync(oldConfigPath, GGBOOK_CONFIG_PATH)
@@ -219,12 +253,18 @@ function oldDirectoryImport() {
         log("Importing GGBook Setup File")
         fs.copyFileSync(oldSetupPath, GGBOOK_SETUP_PATH)
     }
-    if (!fs.existsSync(GGBOOK_OLD_ADDONS_PATH) && fs.existsSync(oldAddonsPath)) {
+    if (!fs.existsSync(GGBOOK_ADDONS_PATH) && fs.existsSync(oldAddonsPath)) {
         log("Importing GGBook Addons File")
         fs.mkdirSync(GGBOOK_OLD_ADDONS_PATH)
         fs.copyFileSync(GGBOOK_OLD_ADDONS_PATH, oldAddonsPath)
     }
-    return;
+
+    const configData = JSON.parse(fs.readFileSync(GGBOOK_CONFIG_PATH, "utf8"))
+    const setupData = JSON.parse(fs.readFileSync(GGBOOK_SETUP_PATH, "utf8"))
+    if (typeof configData.Global.Domain == "undefined") configData.Global.Domain = setupData.domain
+    if (typeof configData.Global.Timezone == "undefined") configData.Global.Timezone = setupData.timezone
+
+    fs.writeFileSync(GGBOOK_CONFIG_PATH, JSON.stringify(configFile))
 }
 
 function isJson(str) {

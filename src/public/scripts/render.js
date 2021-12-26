@@ -1,10 +1,12 @@
 const electron = require("electron")
 // const fs = require("fs")
 const ipcRenderer = electron.ipcRenderer;
-// const config = require('../../config')
-const moment = require('moment-timezone')
+const config = require('../../config')
+const moment = require('moment-timezone');
+const fs = require("fs");
 
 document.addEventListener('DOMContentLoaded', () => {
+
     ipcRenderer.send('ipcReady')
     ipcRenderer.on("error", (event, data) => {
         console.log(data)
@@ -344,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     ipcRenderer.on('deleteProcess', (event, data) => { })
 
-    ipcRenderer.on('notDownloadedModule', (event, data) => { 
+    ipcRenderer.on('notDownloadedModule', (event, data) => {
         const moduleName = data;
 
         document.querySelector("div[data-module='" + moduleName + "']").querySelector("div[data-project-type='app-status']").classList.remove("disabled")
@@ -356,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector(`[data-start-process=${moduleName}]`)?.classList.add("disabled")
     })
 
-    ipcRenderer.on('notStartedModule', (event, data) => { 
+    ipcRenderer.on('notStartedModule', (event, data) => {
         const moduleName = data;
 
         document.querySelector("div[data-module='" + moduleName + "']").querySelector("div[data-project-type='app-status']").classList.remove("disabled")
@@ -408,4 +410,50 @@ document.addEventListener('DOMContentLoaded', () => {
         const process = this.dataset.startupProcess
         if (process == "ggbook") ipcRenderer.send('setModuleGGBookStartup')
     })
+
+    var ggbookTimezones = $("#ggbook-config-form").find("[name='timezone']")
+    moment.tz.zonesForCountry("RU").forEach((v, i) => {
+        ggbookTimezones.append(`<option class="bg-theme" value="${v}">${v}</option>`)
+    })
+
+    $(document).on("click", '[data-menu="config-ggbook-modal"]', () => {
+        console.log("Clicked!")
+        if (!fs.existsSync(config.GGBOOK_CONFIG_PATH)) return;
+        var configData = JSON.parse(fs.readFileSync(config.GGBOOK_CONFIG_PATH))
+        var setupData = JSON.parse(fs.readFileSync(config.GGBOOK_SETUP_PATH))
+        var configForm = $("#ggbook-config-form")
+
+        configForm.find("[name='web-username']").val(configData.Global.GizmoAPI.Username)
+        configForm.find("[name='web-password']").val(configData.Global.GizmoAPI.Password)
+        configForm.find("[name='port']").val(configData.Global.GizmoAPI.Port)
+        configForm.find("[name='redis-username']").val(configData.Global.Redis.username)
+        configForm.find("[name='redis-password']").val(configData.Global.Redis.password)
+        if (typeof configData.Global.Domain !== "undefined")
+            configForm.find("[name='domain']").val(configData.Global.Domain)
+        else
+            configForm.find("[name='domain']").val(setupData.domain)
+
+        if (typeof configData.Global.Timezone !== "undefined")
+            configForm.find("[name='timezone'] option[value='" + configData.Global.Timezone + "']")?.prop('selected', true)
+        else
+            configForm.find("[name='timezone'] option[value='" + setupData.timezone + "']")?.prop('selected', true)
+    })
+
+    $("#ggbook-submit-config-button").on("click", (e) => {
+        e.preventDefault()
+        var configFormSerialize = serializeObject($("#ggbook-config-form"))
+        console.log(configFormSerialize)
+        ipcRenderer.send('setModuleGGBookConfigValues', configFormSerialize)
+    })
+    /** lazy alex... (Config editor) */
+
+    // var ggbookCollapsible = document.getElementById('collapse-ggbook')
+    // ggbookCollapsible.addEventListener('shown.bs.collapse', function () {
+    //     if (!fs.existsSync(config.GGBOOK_CONFIG_PATH)) return;
+    //     var addonsFile = JSON.parse(fs.readFileSync(config.GGBOOK_CONFIG_PATH))
+    // })
 });
+
+function serializeObject(form) {
+    return form.serializeArray().reduce((o, { name: n, value: v }) => Object.assign(o, { [n]: v }), {});
+}

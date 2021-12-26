@@ -26,6 +26,7 @@ module.exports = {
     GGBOOK_PATH: path.join(resolveToAbsolutePath('%APPDATA%'), APP_NAME, "ggbook.exe"),
     GGBOOK_CONFIG_PATH: path.join(resolveToAbsolutePath('%APPDATA%'), APP_NAME, "config.json"),
     GGBOOK_SETUP_PATH: path.join(resolveToAbsolutePath('%APPDATA%'), APP_NAME, "setup.json"),
+    GGBOOK_ADDON_PATH: path.join(resolveToAbsolutePath('%APPDATA%'), APP_NAME, "signals", "index.js"),
     APPDATA: path.join(resolveToAbsolutePath("%APPDATA%"), APP_NAME),
 
     DEFAULT_SETUP_DATA: {
@@ -53,7 +54,6 @@ module.exports = {
     GGBOOK_UPDATE_URL: 'https://ggbook.ru/downloads/ggbook/update',
 
     GGBOOK_OLD_PATH: 'C:\\Program Files (x86)\\GCGApp\\GGBook',
-    GGBOOK_OLD_ADDONS_PATH: 'C:\\Program Files (x86)\\GCGApp\\GGBook\\signals',
 
     HOME_PAGE_URL: 'https://ggbook.ru',
 

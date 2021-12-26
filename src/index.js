@@ -17,7 +17,7 @@ const settings = JSON.parse(windows.main.loadSettings())
 // const path = require('path')
 let shouldQuit = false
 
-if (!settings || !settings.enableHardwareAcceleration) app.disableHardwareAcceleration()
+// if (!settings || !settings.enableHardwareAcceleration) app.disableHardwareAcceleration()
 
 
 // // Handle creating/removing shortcuts on Windows when installing/uninstalling.

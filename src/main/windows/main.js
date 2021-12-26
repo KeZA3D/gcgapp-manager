@@ -36,6 +36,8 @@ function init(state, options) {
     options = {
         backgroundColor: '#282828',
         darkTheme: true, // Forces dark theme (GTK+3)
+        minWidth:400,
+        minHeight: 400,
         height: 800,
         icon: getIconPath(), // Window icon (Windows, Linux)
         minHeight: config.WINDOW_MIN_HEIGHT,
@@ -45,7 +47,7 @@ function init(state, options) {
         titleBarStyle: 'hiddenInset', // Hide title bar (Mac)
         useContentSize: true, // Specify web page size without OS chrome
         width: 600,
-        resizable: false,
+        resizable: true,
         autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: true,

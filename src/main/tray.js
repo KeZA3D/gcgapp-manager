@@ -42,7 +42,7 @@ function createTray() {
     // On Linux, any click (left or right) opens the context menu.
     // tray.on('click', () => windows.main.show())
     tray = new Tray(config.APP_ICON);
-    tray.setToolTip('GGBook Test')
+    tray.setToolTip('GCGApp Manager')
     var contextMenu = Menu.buildFromTemplate([
         {
             label: 'Test', type: "separator"
