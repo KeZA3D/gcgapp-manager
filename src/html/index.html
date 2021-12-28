@@ -11,6 +11,106 @@
     <link rel="stylesheet" type="text/css" href="../public/fonts/fontawesome/css/all.min.css">
     <!-- <script type="text/javascript" src="../public/scripts/render.js"></script> -->
     <title>GGBook</title>
+    <style>
+        .particle {
+            left: -30px;
+            right: -30px;
+            top: -350px;
+            bottom: -350px;
+            height: 200%;
+            z-index: 1;
+            pointer-events: none;
+            position: fixed;
+        }
+
+        .particle span {
+            display: inline-block;
+            animation: particles 3s linear 2s 20;
+            position: relative;
+        }
+
+        .particle span:after,
+        .particle span:before {
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            transform: rotate(120deg);
+        }
+
+        .particle u:before {
+            transform: rotate(240deg);
+        }
+
+        /*main animation*/
+        @-webkit-keyframes particles {
+            0% {
+                -webkit-transform: translate3d(0, 0, 0) rotate(0deg) scale(0.6);
+            }
+
+            100% {
+                -webkit-transform: translate3d(15px, 1200px, 0px) rotate(180deg) scale(0.6);
+            }
+        }
+
+        /*color of particles*/
+        .particle i {
+            color: rgba(160, 206, 203, 0.7);
+        }
+
+        /*setting the interval for particle groups*/
+        .particle span:nth-child(3n + 0) {
+            animation-duration: 10s;
+            animation-iteration-count: 100;
+        }
+
+        .particle span:nth-child(3n + 1) {
+            animation-duration: 13s;
+            animation-iteration-count: 100;
+        }
+
+        .particle span:nth-child(3n + 2) {
+            animation-duration: 15s;
+            animation-iteration-count: 100;
+        }
+
+        /* different delays so they don't all start at the same time */
+        .particle span:nth-child(7n + 0) {
+            opacity: 0.1;
+            animation-delay: 0s;
+        }
+
+        .particle span:nth-child(7n + 1) {
+            opacity: 0.2;
+            animation-delay: 2s;
+        }
+
+        .particle span:nth-child(7n + 2) {
+            opacity: 0.3;
+            animation-delay: 4s;
+        }
+
+        .particle span:nth-child(7n + 3) {
+            opacity: 0.4;
+            animation-delay: 6s;
+        }
+
+        .particle span:nth-child(7n + 4) {
+            opacity: 0.5;
+            animation-delay: 8s;
+        }
+
+        .particle span:nth-child(7n + 5) {
+            opacity: 0.6;
+            animation-delay: 10s;
+        }
+
+        .particle span:nth-child(7n + 6) {
+            opacity: 0.7;
+            animation-delay: 12s;
+        }
+    </style>
 </head>
 
 <body class="theme-dark" data-highlight="highlight-blue" data-gradient="body-default">
@@ -18,7 +118,52 @@
     <div id="preloader" class="preloader">
         <div class="spinner-border color-highlight" role="status"></div>
     </div>
-
+    <div class="particle">
+        <!-- The more items you add the more particles will appear. We recommend not exceeding 80 to 100 elements-->
+        <span><i class="fa fa-snowflake font-35"></i></span>
+        <span><i class="fa fa-snowflake font-40"></i></span>
+        <span><i class="fa fa-snowflake font-35"></i></span>
+        <span><i class="fa fa-snowflake font-30"></i></span>
+        <span><i class="fa fa-snowflake font-25"></i></span>
+        <span><i class="fa fa-snowflake font-20"></i></span>
+        <span><i class="fa fa-snowflake font-15"></i></span>
+        <span><i class="fa fa-snowflake font-10"></i></span>
+        <span><i class="fa fa-snowflake font-15"></i></span>
+        <span><i class="fa fa-snowflake font-20"></i></span>
+        <span><i class="fa fa-snowflake font-25"></i></span>
+        <span><i class="fa fa-snowflake font-30"></i></span>
+        <span><i class="fa fa-snowflake font-35"></i></span>
+        <span><i class="fa fa-snowflake font-40"></i></span>
+        <span><i class="fa fa-snowflake font-35"></i></span>
+        <span><i class="fa fa-snowflake font-30"></i></span>
+        <span><i class="fa fa-snowflake font-25"></i></span>
+        <span><i class="fa fa-snowflake font-20"></i></span>
+        <span><i class="fa fa-snowflake font-15"></i></span>
+        <span><i class="fa fa-snowflake font-10"></i></span>
+        <span><i class="fa fa-snowflake font-15"></i></span>
+        <span><i class="fa fa-snowflake font-20"></i></span>
+        <span><i class="fa fa-snowflake font-25"></i></span>
+        <span><i class="fa fa-snowflake font-30"></i></span>
+        <span><i class="fa fa-snowflake font-35"></i></span>
+        <span><i class="fa fa-snowflake font-40"></i></span>
+        <span><i class="fa fa-snowflake font-35"></i></span>
+        <span><i class="fa fa-snowflake font-30"></i></span>
+        <span><i class="fa fa-snowflake font-25"></i></span>
+        <span><i class="fa fa-snowflake font-20"></i></span>
+        <span><i class="fa fa-snowflake font-15"></i></span>
+        <span><i class="fa fa-snowflake font-10"></i></span>
+        <span><i class="fa fa-snowflake font-15"></i></span>
+        <span><i class="fa fa-snowflake font-20"></i></span>
+        <span><i class="fa fa-snowflake font-25"></i></span>
+        <span><i class="fa fa-snowflake font-30"></i></span>
+        <span><i class="fa fa-snowflake font-35"></i></span>
+        <span><i class="fa fa-snowflake font-40"></i></span>
+        <span><i class="fa fa-snowflake font-35"></i></span>
+        <span><i class="fa fa-snowflake font-30"></i></span>
+        <span><i class="fa fa-snowflake font-25"></i></span>
+        <span><i class="fa fa-snowflake font-20"></i></span>
+        <span><i class="fa fa-snowflake font-15"></i></span>
+    </div>
     <div id="page" style="background-image: url(&quot;../images/G_pic.png&quot;);">
         <div class="page-content header-clear-small pb-0" style="transform: translateX(0px);">
             <div data-card-height="90" class="preload-img card card-style rounded-s"
@@ -91,17 +236,17 @@
                                         class="fa fa-ellipsis-h"></i></a>
                                 <div class="dropdown-menu border-0 bg-theme rounded-m shadow-xl px-2 mt-n4">
                                     <div class="list-group list-custom-small mt-n2 mb-n2">
-                                        <a href="#" class="color-dark-light" data-menu="config-ggbook-modal">
+                                        <a href="#" class="color-dark-light border-0" data-menu="config-ggbook-modal">
                                             <i class="fa font-14 fa-archive color-brown-dark"></i>
                                             Config
                                             <i class="fa"></i>
                                         </a>
-                                        <a href="#" class="color-dark-light no-borders border-0"
+                                        <!-- <a href="#" class="color-dark-light no-borders border-0"
                                             data-menu="menu-ggbook-addons">
                                             <i class="fa font-14 fa-layer-plus color-blue-dark"></i>
                                             Addons
                                             <i class="fa"></i>
-                                        </a>
+                                        </a> -->
                                     </div>
                                 </div>
                             </div>
@@ -237,7 +382,8 @@
 
         <form method="post" id="ggbook-config-form" class="content">
             <div class="input-style no-borders no-icon mt-2">
-                <input type="text" id="trest" class="form-control" name="web-username" placeholder="Enter operator username">
+                <input type="text" id="trest" class="form-control" name="web-username"
+                    placeholder="Enter operator username">
                 <label for="trest" class="color-highlight">Operator Username</label>
                 <em></em>
             </div>

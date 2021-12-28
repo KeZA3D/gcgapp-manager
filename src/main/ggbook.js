@@ -264,7 +264,7 @@ function oldDirectoryImport() {
     if (typeof configData.Global.Domain == "undefined") configData.Global.Domain = setupData.domain
     if (typeof configData.Global.Timezone == "undefined") configData.Global.Timezone = setupData.timezone
 
-    fs.writeFileSync(GGBOOK_CONFIG_PATH, JSON.stringify(configFile))
+    fs.writeFileSync(GGBOOK_CONFIG_PATH, JSON.stringify(configData))
 }
 
 function isJson(str) {

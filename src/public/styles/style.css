@@ -463,6 +463,14 @@ body {
   transform: translateY(0px);
 }
 
+.header-auto-show {
+  pointer-events: none;
+}
+
+.header-auto-show.header-active {
+  pointer-events: all;
+}
+
 /*-Footer Menu-*/
 #footer-bar {
   position: fixed;

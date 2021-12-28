@@ -445,12 +445,14 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(configFormSerialize)
         ipcRenderer.send('setModuleGGBookConfigValues', configFormSerialize)
     })
-    /** lazy alex... (Config editor) */
 
-    // var ggbookCollapsible = document.getElementById('collapse-ggbook')
-    // ggbookCollapsible.addEventListener('shown.bs.collapse', function () {
+    //** To lazy for that shit... sorry... help! */
+    // $(document).on("click", '[data-menu="addons-ggbook-modal"]', () => {
+    //     console.log("Clicked!")
     //     if (!fs.existsSync(config.GGBOOK_CONFIG_PATH)) return;
-    //     var addonsFile = JSON.parse(fs.readFileSync(config.GGBOOK_CONFIG_PATH))
+    //     var configData = JSON.parse(fs.readFileSync(config.GGBOOK_CONFIG_PATH))
+    //     var setupData = JSON.parse(fs.readFileSync(config.GGBOOK_SETUP_PATH))
+    //     var configForm = $("#ggbook-addons-form")
     // })
 });
 
