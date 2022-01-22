@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     // const oldHTML = document.querySelector(".page-content").innerHTML
     const oldSetupConnectionHTML = document.querySelector('[data-setup-name="connection"]').innerHTML
+    const oldWorkerConnectionHTML = document.querySelector('[data-worker-name="connection"]').innerHTML
 
     ipcRenderer.send("get:cache:collection")
 
@@ -256,6 +257,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 projectHTML.querySelector('a[data-bs-toggle="collapse"]').children[0].classList.remove("gradient-blue", "gradient-green")
                 projectHTML.querySelector('a[data-bs-toggle="collapse"]').children[0].classList.add("gradient-yellow")
                 projectHTML.querySelector('a[data-bs-toggle="collapse"]').children[0].children[0].classList.add("fa-spin")
+
+                document.querySelector('[data-worker-name="connection"]').innerHTML = oldWorkerConnectionHTML
                 // appStatusHTML.querySelector("span[data-title='stop']").classList.add("disabled")
                 // appStatusHTML.querySelector("span[data-title='restart']").classList.remove("disabled")
                 // appStatusHTML.querySelector("span[data-title='active']").classList.add("disabled")
@@ -425,6 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         configForm.find("[name='web-username']").val(configData.Global.GizmoAPI.Username)
         configForm.find("[name='web-password']").val(configData.Global.GizmoAPI.Password)
+        configForm.find("[name='secret']").val(configData.Global.Secret)
         configForm.find("[name='port']").val(configData.Global.GizmoAPI.Port)
         configForm.find("[name='redis-username']").val(configData.Global.Redis.username)
         configForm.find("[name='redis-password']").val(configData.Global.Redis.password)

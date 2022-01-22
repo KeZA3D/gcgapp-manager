@@ -152,8 +152,9 @@ function init() {
         processCache = { mode: null, steps: {}, connection: { api: null, database: null, signalr: null, server: null }, operator: { username: null, password: null } }
         if (e !== null) {
             windows.main.send(`process`, JSON.stringify({ event: "restart", data: e, moduleName: moduleName }))
-            log("Restarting ggbook application")
-            setTimeout(() => ggbook.init(), 2000)
+            log("Restarting GGBook application")
+            // setTimeout(() => ggbook.init(), 2000)
+            restart()
         }
     })
 
@@ -208,8 +209,9 @@ async function checkUpdates(forceInit = false) {
 }
 
 function setConfigValues(data) {
-    var configFile;
+    var configFile, setupFile;
     if (fs.existsSync(GGBOOK_CONFIG_PATH)) configFile = JSON.parse(fs.readFileSync(GGBOOK_CONFIG_PATH, 'utf8'))
+    if (fs.existsSync(GGBOOK_SETUP_PATH)) setupFile = JSON.parse(fs.readFileSync(GGBOOK_SETUP_PATH, 'utf8'))
     else configFile = {
         Global: {
             GizmoAPI: {
@@ -234,10 +236,12 @@ function setConfigValues(data) {
         password: data['redis-password'],
     }
     configFile.Global.Secret = data['secret']
-    configFile.Global.Domain = data['domain']
-    configFile.Global.Timezone = data['timezone']
+
+    setupFile.domain = data['domain']
+    setupFile.Timezone = data['timezone']
 
     fs.writeFileSync(GGBOOK_CONFIG_PATH, JSON.stringify(configFile))
+    fs.writeFileSync(GGBOOK_SETUP_PATH, JSON.stringify(setupFile))
 }
 
 function oldDirectoryImport() {
