@@ -48,7 +48,7 @@ function createTray() {
             label: 'Test', type: "separator"
         },
         {
-            label: 'Закрыть GGBook', click: function () {
+            label: 'Закрыть GCGApp', click: function () {
                 app.quit();
             }
         }

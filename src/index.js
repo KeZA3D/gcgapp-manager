@@ -1,8 +1,15 @@
 console.time("init")
 
 require('@electron/remote/main').initialize()
+
 const electron = require('electron');
 const { app, Notification, mainWindow } = electron;
+
+// // Handle creating/removing shortcuts on Windows when installing/uninstalling.
+if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
+  app.quit();
+}
+
 const ipc = require('./main/ipc')
 const ggbook = require('./main/ggbook')
 const windows = require('./main/windows')
@@ -17,13 +24,7 @@ const settings = JSON.parse(windows.main.loadSettings())
 // const path = require('path')
 let shouldQuit = false
 
-// if (!settings || !settings.enableHardwareAcceleration) app.disableHardwareAcceleration()
-
-
-// // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
-  app.quit();
-}
+app.disableHardwareAcceleration()
 
 wincmd.isAdminUser((isAdmin) => {
   console.log("Running app as", isAdmin == true ? "Administrator" : "DefaultUser (Should Quit)")

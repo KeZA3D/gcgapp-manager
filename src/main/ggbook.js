@@ -109,7 +109,7 @@ function init() {
 
     const child = ggbook.process = cp.spawn(GGBOOK_PATH, ["--colors"], {
         windowsHide: true,
-        stdio: ["pipe", 'pipe', 'pipe', 'ipc']
+        stdio: ['pipe', 'pipe', 'pipe', 'ipc']
     });
 
     child.on("message", (m) => {
@@ -238,7 +238,7 @@ function setConfigValues(data) {
     configFile.Global.Secret = data['secret']
 
     setupFile.domain = data['domain']
-    setupFile.Timezone = data['timezone']
+    setupFile.timezone = data['timezone']
 
     fs.writeFileSync(GGBOOK_CONFIG_PATH, JSON.stringify(configFile))
     fs.writeFileSync(GGBOOK_SETUP_PATH, JSON.stringify(setupFile))
