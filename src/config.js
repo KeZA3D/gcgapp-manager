@@ -47,7 +47,6 @@ module.exports = {
 
     GITHUB_URL: 'https://github.com/KeZA3D/gcgapp-manager',
     GITHUB_URL_ISSUES: 'https://github.com/KeZA3D/gcgapp-manager/issues',
-    GITHUB_URL_RAW: 'https://raw.githubusercontent.com/webtorrent/webtorrent-desktop/master',
     GITHUB_URL_RELEASES: 'https://github.com/KeZA3D/gcgapp-manager/releases',
 
     GGBOOK_DOWNLOAD_URL: 'https://ggbook.ru/downloads/ggbook/stable/ggbook.exe',
