@@ -95,7 +95,7 @@ function init() {
 
     windows.main.send('startProcess', 'ggbook')
 
-    oldDirectoryImport()
+    // oldDirectoryImport()
     if (fs.existsSync(GGBOOK_SETUP_PATH) == false) {
         fs.writeFileSync(GGBOOK_SETUP_PATH, JSON.stringify(DEFAULT_SETUP_DATA))
     }
@@ -244,32 +244,32 @@ function setConfigValues(data) {
     fs.writeFileSync(GGBOOK_SETUP_PATH, JSON.stringify(setupFile))
 }
 
-function oldDirectoryImport() {
-    const oldConfigPath = path.join(GGBOOK_OLD_PATH, "config.json")
-    const oldSetupPath = path.join(GGBOOK_OLD_PATH, "setup.json")
-    // const oldProcessPath = path.join(GGBOOK_OLD_PATH, "setup.json")
-    const oldAddonsPath = path.join(GGBOOK_OLD_PATH, "signals", "index.js")
-    if (!fs.existsSync(GGBOOK_CONFIG_PATH) && fs.existsSync(oldConfigPath)) {
-        log("Importing GGBook Config File")
-        fs.copyFileSync(oldConfigPath, GGBOOK_CONFIG_PATH)
-    }
-    if (!fs.existsSync(GGBOOK_SETUP_PATH) && fs.existsSync(oldSetupPath)) {
-        log("Importing GGBook Setup File")
-        fs.copyFileSync(oldSetupPath, GGBOOK_SETUP_PATH)
-    }
-    if (!fs.existsSync(GGBOOK_ADDONS_PATH) && fs.existsSync(oldAddonsPath)) {
-        log("Importing GGBook Addons File")
-        fs.mkdirSync(GGBOOK_OLD_ADDONS_PATH)
-        fs.copyFileSync(GGBOOK_OLD_ADDONS_PATH, oldAddonsPath)
-    }
+// function oldDirectoryImport() {
+//     const oldConfigPath = path.join(GGBOOK_OLD_PATH, "config.json")
+//     const oldSetupPath = path.join(GGBOOK_OLD_PATH, "setup.json")
+//     // const oldProcessPath = path.join(GGBOOK_OLD_PATH, "setup.json")
+//     const oldAddonsPath = path.join(GGBOOK_OLD_PATH, "signals", "index.js")
+//     if (!fs.existsSync(GGBOOK_CONFIG_PATH) && fs.existsSync(oldConfigPath)) {
+//         log("Importing GGBook Config File")
+//         fs.copyFileSync(oldConfigPath, GGBOOK_CONFIG_PATH)
+//     }
+//     if (!fs.existsSync(GGBOOK_SETUP_PATH) && fs.existsSync(oldSetupPath)) {
+//         log("Importing GGBook Setup File")
+//         fs.copyFileSync(oldSetupPath, GGBOOK_SETUP_PATH)
+//     }
+//     if (!fs.existsSync(GGBOOK_ADDONS_PATH) && fs.existsSync(oldAddonsPath)) {
+//         log("Importing GGBook Addons File")
+//         fs.mkdirSync(GGBOOK_OLD_ADDONS_PATH)
+//         fs.copyFileSync(GGBOOK_OLD_ADDONS_PATH, oldAddonsPath)
+//     }
 
-    const configData = JSON.parse(fs.readFileSync(GGBOOK_CONFIG_PATH, "utf8"))
-    const setupData = JSON.parse(fs.readFileSync(GGBOOK_SETUP_PATH, "utf8"))
-    if (typeof configData.Global.Domain == "undefined") configData.Global.Domain = setupData.domain
-    if (typeof configData.Global.Timezone == "undefined") configData.Global.Timezone = setupData.timezone
+//     const configData = JSON.parse(fs.readFileSync(GGBOOK_CONFIG_PATH, "utf8"))
+//     const setupData = JSON.parse(fs.readFileSync(GGBOOK_SETUP_PATH, "utf8"))
+//     if (typeof configData.Global.Domain == "undefined") configData.Global.Domain = setupData.domain
+//     if (typeof configData.Global.Timezone == "undefined") configData.Global.Timezone = setupData.timezone
 
-    fs.writeFileSync(GGBOOK_CONFIG_PATH, JSON.stringify(configData))
-}
+//     fs.writeFileSync(GGBOOK_CONFIG_PATH, JSON.stringify(configData))
+// }
 
 function isJson(str) {
     try {

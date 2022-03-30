@@ -36,7 +36,7 @@ module.exports = {
             "37.77.105.108",
             "127.0.0.1"
         ],
-        version: 3.068
+        version: 3.100
     },
     DEFAULT_SETTINGS_DATA: {
         projectAutoStart: {

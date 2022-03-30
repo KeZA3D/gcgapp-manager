@@ -34,10 +34,10 @@ wincmd.isAdminUser((isAdmin) => {
   }
 })
 
-require('./main/updater')({
-  repo: 'KeZA3D/gcgapp-manager',
-  updateInterval: '5 hours'
-})
+// require('./main/updater')({
+//   repo: 'KeZA3D/gcgapp-manager',
+//   updateInterval: '5 hours'
+// })
 
 
 if (!shouldQuit && !app.requestSingleInstanceLock()) {
